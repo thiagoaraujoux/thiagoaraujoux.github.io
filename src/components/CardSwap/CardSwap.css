@@ -2,10 +2,11 @@
   position: absolute;
   bottom: 0;
   right: 0;
-  transform: translate(-10%, -20%);
+  transform: translate(-10%, 0%);
   transform-origin: bottom right;
   perspective: 1200px;
   overflow: visible;
+  background: transparent;
 }
 
 .card {
@@ -14,7 +15,7 @@
   left: 50%;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  background: #111;
+  background: rgba(17, 17, 17, 0.5);
   color: white;
   padding: 30px;
   display: flex;
@@ -35,22 +36,37 @@
     transform: translateX(-50%);
     transform-origin: center;
     perspective: 800px;
-    width: 90%;
+    width: 100%;
     max-width: 360px;
     height: auto;
     margin: 0 auto 20px auto;
     overflow: visible;
+    padding-top: 80px;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .card {
-    position: absolute;
-    top: 50%;
-    left: 50%;
+    position: relative;
+    top: auto;
+    left: auto;
     transform-origin: 50% 50%;
     width: 100%;
     max-width: 360px;
-    padding: 16px 18px;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+    padding: 24px 28px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin: 0 auto;
+    background: rgba(17, 17, 17, 0.65);
+    border: 1.5px solid rgba(157, 78, 221, 0.25);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+  }
+
+  .card:hover {
+    border-color: rgba(157, 78, 221, 0.4);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.15), 0 0 30px rgba(157, 78, 221, 0.1);
   }
 }

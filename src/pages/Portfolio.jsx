@@ -173,17 +173,26 @@ const Portfolio = () => {
           <div className="ls-content-glass">
             <h2 className="section-title">Trajetória Profissional</h2>
             <div className="ls-timeline">
-              <div className="timeline-item">
+              <div className="timeline-item" data-year="03">
+                <div className="timeline-marker">
+                  <span className="timeline-number">03</span>
+                </div>
                 <span className="date">2023 - 2026</span>
                 <h4>SEDUC-TO</h4>
                 <p>Analista de Sistemas e BI. Desenvolvimento de apps e painéis de dados estratégicos para a Secretaria da Educação.</p>
               </div>
-              <div className="timeline-item">
+              <div className="timeline-item" data-year="02">
+                <div className="timeline-marker">
+                  <span className="timeline-number">02</span>
+                </div>
                 <span className="date">2022 - 2023</span>
                 <h4>PGE-TO</h4>
                 <p>Suporte de Infraestrutura, implantação de Docker e gestão de ativos via GLPI na Procuradoria Geral.</p>
               </div>
-              <div className="timeline-item">
+              <div className="timeline-item" data-year="01">
+                <div className="timeline-marker">
+                  <span className="timeline-number">01</span>
+                </div>
                 <span className="date">2020 - 2022</span>
                 <h4>TCE-TO</h4>
                 <p>Suporte técnico e elaboração de fluxos de processos com Bizagi no Tribunal de Contas.</p>
