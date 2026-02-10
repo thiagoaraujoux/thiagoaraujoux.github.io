@@ -1,36 +1,93 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import CardSwap, { Card } from '../components/CardSwap/CardSwap';
-import PurpleParticles from '../components/Aurora/Aurora';
+import Aurora from '../components/Aurora/Aurora';
 import './Portfolio.css';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const scrollContainerRef = useRef(null);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 968);
 
   const closeMenu = () => setIsMenuOpen(false);
 
+  // Fechar menu ao clicar fora
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (isMenuOpen && !event.target.closest('.ls-mobile-menu') && !event.target.closest('.ls-hamburguer')) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, [isMenuOpen]);
+
+  // Acompanhar tamanho da janela para responsividade do CardSwap
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Evitar scroll do body quando menu está aberto
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isMenuOpen]);
+
+  // Handlers para os botões
+  const handleEmailClick = () => {
+    window.location.href = 'mailto:thiagoaraujo.tec@gmail.com';
+  };
+
+  const handleLinkedInClick = () => {
+    window.open('https://linkedin.com/in/thiagoaraujotec', '_blank');
+  };
+
+  const handleGitHubClick = () => {
+    window.open('https://github.com/thiagoaraujoux', '_blank');
+  };
+
+  const handleWhatsAppClick = () => {
+    window.open('https://wa.me/5563999603333', '_blank');
+  };
+
+  const handleProjectsClick = () => {
+    // Implementar navegação para projetos
+    console.log('Ver projetos clicado');
+  };
+
+  const handleDownloadCV = () => {
+    window.open('/cv-thiago-araujo.pdf', '_blank');
+  };
+
   return (
     <div className="ls-wrapper">
-      {/* BACKGROUND COM PARTICULAS RÁPIDAS */}
+      {/* BACKGROUND COM PARTICULAS - Mantenha a estrutura que está funcionando */}
       <div className="ls-background-fixed">
-        {/* PARTICULAS ROXAS RÁPIDAS E INTENSAS */}
-        <PurpleParticles
-          // REMOVIDO: scrollProgress prop
-          particleCount={550} // Aumentado
+        <Aurora
+          particleCount={550}
           particleSpread={20}
-          speed={0.3} // MUITO mais rápido
-          particleBaseSize={140} // Aumentado
-          sizeRandomness={3.5} // Aumentado
+          speed={0.3}
+          particleBaseSize={140}
+          sizeRandomness={3.5}
           moveParticlesOnHover={true}
-          particleHoverFactor={0.8} // Aumentado
+          particleHoverFactor={0.8}
           alphaParticles={true}
           disableRotation={false}
           pixelRatio={1.5}
-          intensity={1.8} // Muito mais intenso
+          intensity={1.8}
           className="purple-particles-fullscreen"
         />
-        
-        {/* Overlay para melhor legibilidade */}
         <div className="content-overlay" />
       </div>
 
@@ -38,10 +95,11 @@ const Portfolio = () => {
       <nav className="ls-navbar">
         <div className="ls-nav-content">
           <div className="ls-logo">THIAGO ARAÚJO</div>
-          <button 
-            className={`ls-hamburguer ${isMenuOpen ? 'open' : ''}`} 
+          <button
+            className={`ls-hamburguer ${isMenuOpen ? 'open' : ''}`}
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Menu"
+            aria-expanded={isMenuOpen}
           >
             <div className="bar"></div>
             <div className="bar"></div>
@@ -56,29 +114,43 @@ const Portfolio = () => {
           <a href="#home" onClick={closeMenu}>INÍCIO</a>
           <a href="#exp" onClick={closeMenu}>EXPERIÊNCIA</a>
           <a href="#skills" onClick={closeMenu}>TECNOLOGIAS</a>
+          <a href="#contact" onClick={closeMenu}>CONTATO</a>
         </div>
       </div>
 
-      {/* MAIN CONTENT */}
-      <div className="ls-main-scroll" ref={scrollContainerRef}>
+      {/* MAIN CONTENT - Use a classe que está funcionando */}
+      <div className="ls-main-scroll">
         {/* Seção Hero */}
         <section id="home" className="ls-section">
           <div className="ls-hero-container">
             <div className="ls-hero-text">
               <div className="ls-badge">ANALISTA DE INFRAESTRUTURA & DEV</div>
-              <h1 className="ls-title">Sistemas Fluidos,<br/>Infraestrutura Robusta.</h1>
+              <h1 className="ls-title">Sistemas Fluidos,<br />Infraestrutura Robusta.</h1>
               <p className="ls-description">
-                Bacharel em Sistemas de Informação pela <b>UNITINS</b>. 
+                Bacharel em Sistemas de Informação pela <b>UNITINS</b>.
                 Especialista em unir hardware, software e inteligência de dados com foco em UX/UI.
               </p>
               <div className="ls-btn-group">
-                <button className="ls-btn-primary">Ver Projetos</button>
-                <button className="ls-btn-glass">Download CV</button>
+                <button 
+                  className="ls-btn-primary"
+                  onClick={handleProjectsClick}
+                >
+                  Ver Projetos
+                </button>
+                <button 
+                  className="ls-btn-glass"
+                  onClick={handleDownloadCV}
+                >
+                  Download CV
+                </button>
               </div>
             </div>
+ {/* DIV DE ESPAÇAMENTO VISÍVEL APENAS EM MOBILE */}
+  <div className="button-cards-spacer"></div>
+
 
             <div className="ls-hero-cards">
-              <CardSwap cardDistance={window.innerWidth < 968 ? 30 : 40}>
+              <CardSwap cardDistance={windowWidth < 400 ? 10 : (windowWidth < 768 ? 15 : 30)}>
                 <Card>
                   <div className="ls-card-glass">
                     <h3 className="card-title">Fullstack Dev</h3>
@@ -96,7 +168,7 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* SEÇÃO 2: EXPERIÊNCIA */}
+        {/* SEÇÃO EXPERIÊNCIA PROFISSIONAL */}
         <section id="exp" className="ls-section">
           <div className="ls-content-glass">
             <h2 className="section-title">Trajetória Profissional</h2>
@@ -120,19 +192,73 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* SEÇÃO 3: SKILLS */}
+        {/* SEÇÃO TECNOLOGIAS - NOVA SEÇÃO ADICIONADA */}
         <section id="skills" className="ls-section">
-          <div className="ls-skills-grid">
-            <div className="ls-card-glass">
-              <h3>Linguagens</h3>
-              <div className="tag-cloud">
-                <span>Python</span><span>PHP</span><span>Java</span><span>JS</span><span>TS</span><span>C#</span><span>C++</span>
+          <div className="ls-tech-container">
+            <h2 className="ls-tech-title">Tecnologias & Ferramentas</h2>
+            <p className="ls-tech-subtitle">
+              Stack técnica utilizada no desenvolvimento de soluções robustas e escaláveis.
+            </p>
+            <div className="ls-tech-grid">
+              <div className="tech-card">
+                <div className="tech-icon">⚡</div>
+                <h4>Frontend</h4>
+                <p>React, Next.js, TypeScript, Tailwind CSS</p>
+              </div>
+              <div className="tech-card">
+                <div className="tech-icon">🔧</div>
+                <h4>Backend</h4>
+                <p>Node.js, Java, PHP, Python, APIs REST</p>
+              </div>
+              <div className="tech-card">
+                <div className="tech-icon">📊</div>
+                <h4>Data & BI</h4>
+                <p>Power BI, Looker Studio, SQL, ETL</p>
+              </div>
+              <div className="tech-card">
+                <div className="tech-icon">🛠️</div>
+                <h4>DevOps & Infra</h4>
+                <p>Docker, Linux, VMware, Git, CI/CD</p>
               </div>
             </div>
-            <div className="ls-card-glass">
-              <h3>Ferramentas</h3>
-              <div className="tag-cloud">
-                <span>Docker</span><span>React</span><span>Next.js</span><span>VMware</span><span>Power BI</span><span>MySQL</span>
+          </div>
+        </section>
+
+        {/* SEÇÃO CONTATO */}
+        <section id="contact" className="ls-section">
+          <div className="ls-content-glass">
+            <h2 className="section-title">Contato</h2>
+            <div className="contact-content">
+              <p className="card-text">
+                Disponível para oportunidades e projetos desafiadores.
+                Vamos conversar sobre como posso contribuir com sua equipe.
+              </p>
+              <div className="ls-btn-group">
+                <button 
+                  className="ls-btn-primary" 
+                  onClick={handleEmailClick}
+                >
+                  Enviar Email
+                </button>
+                <button 
+                  className="ls-btn-glass" 
+                  onClick={handleLinkedInClick}
+                >
+                  LinkedIn
+                </button>
+                <button 
+                  className="ls-btn-glass" 
+                  onClick={handleGitHubClick}
+                >
+                  GitHub
+                </button>
+                <button 
+                  className="whatsapp-btn" 
+                  onClick={handleWhatsAppClick}
+                >
+                  <span className="whatsapp-icon">💬</span>
+                  WhatsApp
+                </button>
               </div>
             </div>
           </div>

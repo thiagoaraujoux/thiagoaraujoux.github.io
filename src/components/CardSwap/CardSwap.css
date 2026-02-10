@@ -24,3 +24,33 @@
   transform-style: preserve-3d;
   will-change: transform;
 }
+
+/* Responsive: simplify and center CardSwap on small screens */
+@media (max-width: 420px) {
+  .card-swap-container {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: center;
+    perspective: 800px;
+    width: 90%;
+    max-width: 360px;
+    height: auto;
+    margin: 0 auto 20px auto;
+    overflow: visible;
+  }
+
+  .card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform-origin: 50% 50%;
+    width: 100%;
+    max-width: 360px;
+    padding: 16px 18px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.45);
+  }
+}

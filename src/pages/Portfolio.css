@@ -1,37 +1,135 @@
-/* --- 1. CONFIGURAÇÕES GLOBAIS E RESET --- */
+/* =========================================== */
+/* PORTFOLIO THIAGO ARAÚJO - CSS REVISADO 2024 */
+/* =========================================== */
+
+/* --- 1. VARIÁVEIS E RESET --- */
 :root {
   --primary: #9d4edd;
+  --primary-light: #c77dff;
+  --primary-dark: #7b2cbf;
   --primary-glow: rgba(157, 78, 221, 0.4);
+  
+  --secondary: #64dfdf;
+  --secondary-glow: rgba(100, 223, 223, 0.4);
+  
   --glass: rgba(255, 255, 255, 0.03);
   --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-hover: rgba(255, 255, 255, 0.06);
+  
   --text-main: #ffffff;
   --text-dim: rgba(255, 255, 255, 0.6);
+  --text-muted: rgba(255, 255, 255, 0.4);
+  
   --bg-dark: #020205;
+  --bg-darker: #010102;
   --bg-gradient: linear-gradient(135deg, #0a0a15 0%, #050510 100%);
+  
+  --whatsapp-green: #25D366;
+  --whatsapp-green-dark: #128C7E;
+  --linkedin-blue: #0A66C2;
+  --github-gray: #333333;
+  
+  --success: #4CAF50;
+  --warning: #FF9800;
+  --danger: #F44336;
+  --info: #2196F3;
+  
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 24px;
+  --border-radius-xl: 32px;
+  --border-radius-full: 100px;
+  
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-xxl: 48px;
+  
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.25);
+  --shadow-primary: 0 0 30px rgba(157, 78, 221, 0.15);
+  --shadow-secondary: 0 0 30px rgba(100, 223, 223, 0.15);
 }
 
+/* Reset global */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  width: 100%;
+  overflow-x: hidden;
+}
+
 body {
   background: var(--bg-dark);
   color: var(--text-main);
-  font-family: 'Inter', -apple-system, sans-serif;
-  overflow: hidden;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  min-height: 100vh;
+  position: relative;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Seleção personalizada */
+::selection {
+  background: rgba(157, 78, 221, 0.3);
+  color: white;
+}
+
+::-moz-selection {
+  background: rgba(157, 78, 221, 0.3);
+  color: white;
+}
+
+/* Remove default button styles */
+button {
+  font-family: inherit;
+  outline: none;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+/* Links */
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: var(--transition-normal);
+}
+
+/* Imagens responsivas */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
 }
 
 /* --- 2. ESTRUTURA PRINCIPAL --- */
 .ls-wrapper {
   position: relative;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
 }
 
-/* --- BACKGROUND COM PARTICULAS --- */
+/* --- 3. BACKGROUND FIXO --- */
 .ls-background-fixed {
   position: fixed;
   top: 0;
@@ -43,16 +141,18 @@ body {
   background: var(--bg-gradient);
 }
 
+/* Aurora/partículas - DEVE vir ANTES do content-overlay */
 .purple-particles-fullscreen {
   position: fixed !important;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 1;
-  pointer-events: auto;
+  z-index: 2; /* Z-index maior que o background mas menor que o overlay */
+  pointer-events: none;
 }
 
+/* Overlay sobre o background */
 .content-overlay {
   position: fixed;
   top: 0;
@@ -61,92 +161,84 @@ body {
   height: 100%;
   background: linear-gradient(
     to bottom,
-    rgba(10, 10, 20, 0.8) 0%,
-    rgba(5, 5, 15, 0.6) 50%,
-    rgba(2, 2, 5, 0.4) 100%
+    rgba(10, 10, 20, 0.25) 0%,
+    rgba(5, 5, 15, 0.15) 50%,
+    rgba(2, 2, 5, 0.1) 100%
   );
-  z-index: 2;
+  z-index: 3; /* Z-index maior que as partículas */
   pointer-events: none;
 }
 
-/* --- 3. NAVBAR COM GLASS SURFACE EFFECT --- */
+/* --- 4. NAVBAR COM GLASS MORPHISM --- */
 .ls-navbar {
   position: fixed;
-  top: 30px;
+  top: var(--spacing-xl);
   left: 50%;
   transform: translateX(-50%);
   width: 90%;
   max-width: 1100px;
   
-  /* Efeito Glass Surface */
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(12px) saturate(1.8) brightness(1.1);
-  -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.1);
+  /* Efeito Glass Morphism Premium */
+  background: rgba(255, 255, 255, 0.12);
+  -webkit-backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
+  backdrop-filter: blur(16px) saturate(180%) brightness(1.1);
   
-  border: 1px solid rgba(255, 255, 255, 0.25);
-  border-radius: 100px;
-  padding: 15px 35px;
-  z-index: 1000;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--border-radius-full);
+  padding: var(--spacing-md) var(--spacing-xl);
+  z-index: 1000; /* Z-index ALTO para ficar acima de tudo */
   pointer-events: auto;
   
-  /* Sombras do Glass Surface */
+  /* Sistema de sombras complexo */
   box-shadow:
-    0 0 2px 1px rgba(0, 0, 0, 0.1) inset,
-    0 0 10px 4px rgba(0, 0, 0, 0.08) inset,
-    0px 4px 16px rgba(17, 17, 26, 0.1),
-    0px 8px 24px rgba(17, 17, 26, 0.1),
-    0px 16px 56px rgba(17, 17, 26, 0.1),
-    0px 4px 16px rgba(17, 17, 26, 0.05) inset,
-    0px 8px 24px rgba(17, 17, 26, 0.05) inset,
-    0px 16px 56px rgba(17, 17, 26, 0.05) inset,
-    
-    /* Sombras roxas suaves */
-    0 0 30px rgba(157, 78, 221, 0.15),
-    0 0 60px rgba(157, 78, 221, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    inset 0 0 20px rgba(0, 0, 0, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 0 40px rgba(157, 78, 221, 0.15),
+    0 0 80px rgba(157, 78, 221, 0.05);
   
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all var(--transition-normal);
 }
 
-/* Efeito de borda luminosa */
+/* Borda gradiente luminosa */
 .ls-navbar::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 100px;
+  border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
     135deg,
-    rgba(157, 78, 221, 0.3) 0%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(157, 78, 221, 0.1) 100%
+    rgba(157, 78, 221, 0.4) 0%,
+    rgba(255, 255, 255, 0.2) 50%,
+    rgba(157, 78, 221, 0.2) 100%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
-  opacity: 0.7;
+  opacity: 0.8;
 }
 
-/* Efeito hover */
+/* Efeito hover refinado */
 .ls-navbar:hover {
-  background: rgba(255, 255, 255, 0.18);
-  backdrop-filter: blur(15px) saturate(2) brightness(1.15);
-  -webkit-backdrop-filter: blur(15px) saturate(2) brightness(1.15);
+  background: rgba(255, 255, 255, 0.16);
+  -webkit-backdrop-filter: blur(20px) saturate(200%) brightness(1.15);
+  backdrop-filter: blur(20px) saturate(200%) brightness(1.15);
   
-  transform: translateX(-50%) translateY(-2px);
+  transform: translateX(-50%) translateY(-3px);
   box-shadow:
-    0 0 2px 1px rgba(0, 0, 0, 0.12) inset,
-    0 0 12px 6px rgba(0, 0, 0, 0.1) inset,
-    0px 8px 32px rgba(17, 17, 26, 0.15),
-    0px 16px 48px rgba(17, 17, 26, 0.15),
-    0px 32px 96px rgba(17, 17, 26, 0.15),
-    0px 4px 16px rgba(17, 17, 26, 0.08) inset,
-    0px 8px 24px rgba(17, 17, 26, 0.08) inset,
-    0px 16px 56px rgba(17, 17, 26, 0.08) inset,
-    
-    /* Sombras roxas mais intensas no hover */
-    0 0 40px rgba(157, 78, 221, 0.2),
-    0 0 80px rgba(157, 78, 221, 0.1);
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    inset 0 0 25px rgba(0, 0, 0, 0.15),
+    0 12px 48px rgba(0, 0, 0, 0.4),
+    0 4px 16px rgba(0, 0, 0, 0.25),
+    0 0 60px rgba(157, 78, 221, 0.2),
+    0 0 120px rgba(157, 78, 221, 0.1);
 }
 
 /* Conteúdo da navbar */
@@ -154,103 +246,168 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: var(--spacing-md);
 }
 
 .ls-logo {
   font-weight: 900;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   color: white;
-  letter-spacing: 2px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  position: relative;
+  padding: var(--spacing-xs) 0;
 }
 
-/* Menu hamburguer */
+.ls-logo::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  border-radius: 1px;
+  opacity: 0.5;
+}
+
+/* Menu hamburguer moderno */
 .ls-hamburguer {
-  background: none;
+  background: transparent;
   border: none;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  padding: 5px;
+  padding: var(--spacing-sm);
+  border-radius: var(--border-radius-sm);
+  transition: var(--transition-normal);
+  position: relative;
+  z-index: 1001;
+}
+
+.ls-hamburguer:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.ls-hamburguer:active {
+  transform: scale(0.95);
 }
 
 .bar {
   width: 28px;
   height: 2px;
   background: white;
-  transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 1px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transform-origin: center;
 }
 
-.ls-hamburguer.open .bar:nth-child(1) { transform: translateY(8px) rotate(45deg); }
-.ls-hamburguer.open .bar:nth-child(2) { opacity: 0; transform: translateX(20px); }
-.ls-hamburguer.open .bar:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+/* Estados do menu hamburguer */
+.ls-hamburguer.open .bar:nth-child(1) { 
+  transform: translateY(9px) rotate(45deg); 
+}
 
-/* --- MENU MÓVEL COM GLASS SURFACE --- */
+.ls-hamburguer.open .bar:nth-child(2) { 
+  opacity: 0; 
+  transform: translateX(-20px); 
+}
+
+.ls-hamburguer.open .bar:nth-child(3) { 
+  transform: translateY(-9px) rotate(-45deg); 
+}
+
+/* --- MENU MÓVEL PREMIUM --- */
 .ls-mobile-menu {
   position: fixed;
   inset: 0;
   
-  /* Efeito Glass Surface para o menu móvel */
-  background: rgba(2, 2, 5, 0.85);
-  backdrop-filter: blur(40px) saturate(1.8) brightness(0.9);
-  -webkit-backdrop-filter: blur(40px) saturate(1.8) brightness(0.9);
+  /* Overlay glass escuro */
+  background: rgba(2, 2, 5, 0.92);
+  -webkit-backdrop-filter: blur(40px) saturate(180%) brightness(0.8);
+  backdrop-filter: blur(40px) saturate(180%) brightness(0.8);
   
-  z-index: 900;
+  z-index: 999; /* Abaixo da navbar mas acima de tudo */
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   clip-path: circle(0% at 90% 5%);
-  transition: 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+  transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
 }
 
-.ls-mobile-menu.active { clip-path: circle(150% at 90% 5%); }
+.ls-mobile-menu.active { 
+  clip-path: circle(150% at 90% 5%); 
+}
+
+.ls-menu-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
 
 .ls-menu-links a {
-  display: block;
   font-size: 3.5rem;
   font-weight: 900;
   color: white;
   text-decoration: none;
-  margin: 25px 0;
+  padding: var(--spacing-sm) var(--spacing-xl);
+  position: relative;
+  overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Efeito underline animado */
+.ls-menu-links a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: -100%;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ls-menu-links a:hover::before {
+  left: 100%;
 }
 
 .ls-menu-links a:hover {
   color: var(--primary);
-  transform: translateX(10px) scale(1.05);
+  transform: translateX(12px) scale(1.05);
+  text-shadow: 0 0 20px rgba(157, 78, 221, 0.5);
 }
 
-/* --- 4. SISTEMA DE SCROLL SNAP --- */
-.ls-main-scroll {
+/* --- 5. CONTEÚDO PRINCIPAL (SEM SCROLL SNAP PROBLEMÁTICO) --- */
+.ls-main-content {
   position: relative;
-  z-index: 10;
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scrollbar-width: none;
+  z-index: 50;
+  width: 100%;
+  min-height: 100vh;
+  padding-top: 120px; /* Espaço para a navbar */
 }
-
-.ls-main-scroll::-webkit-scrollbar { display: none; }
 
 .ls-section {
-  height: 100vh;
-  scroll-snap-align: start;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 50px;
-  pointer-events: none;
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  position: relative;
+  z-index: 50;
 }
 
-/* --- 5. LAYOUT DA HERO (SPLIT-SCREEN) --- */
+/* --- 6. HERO SECTION (SPLIT-SCREEN) --- */
 .ls-hero-container {
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 80px;
+  gap: var(--spacing-xxl);
   width: 100%;
   max-width: 1300px;
   align-items: center;
-  margin-top: 40px;
+  margin: 0 auto;
 }
 
 .ls-hero-text {
@@ -262,163 +419,253 @@ body {
   color: var(--primary);
   font-weight: 800;
   letter-spacing: 4px;
-  font-size: 0.75rem;
-  margin-bottom: 20px;
-  display: block;
+  font-size: 0.8rem;
+  margin-bottom: var(--spacing-lg);
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  background: rgba(157, 78, 221, 0.1);
+  border: 1px solid rgba(157, 78, 221, 0.2);
+  border-radius: var(--border-radius-full);
+  text-transform: uppercase;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .ls-title {
   font-size: clamp(2.5rem, 6vw, 4.5rem);
   font-weight: 900;
   line-height: 1.05;
-  margin-bottom: 25px;
+  margin-bottom: var(--spacing-lg);
   color: white;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.ls-title span {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .ls-description {
   color: var(--text-dim);
   font-size: 1.15rem;
-  line-height: 1.6;
+  line-height: 1.7;
   max-width: 550px;
-  margin-bottom: 40px;
+  margin-bottom: var(--spacing-xl);
+  animation: fadeInUp 0.8s ease 0.6s both;
+}
+
+.ls-description b {
+  color: var(--text-main);
+  font-weight: 600;
 }
 
 .ls-btn-group {
   display: flex;
-  gap: 20px;
+  gap: var(--spacing-lg);
+  animation: fadeInUp 0.8s ease 0.8s both;
 }
 
-.ls-btn-primary {
-  background: linear-gradient(135deg, #7b2cbf, #9d4edd);
-  color: white;
+/* Botões base */
+.ls-btn {
   border: none;
+  border-radius: var(--border-radius-full);
   padding: 18px 45px;
-  border-radius: 50px;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
-  transition: 0.3s;
+  transition: all var(--transition-normal);
+  pointer-events: auto;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-width: 180px;
+}
+
+/* Efeito de brilho interno para botões */
+.ls-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.ls-btn:hover::before {
+  left: 100%;
+}
+
+/* Botão primário (gradiente roxo) */
+.ls-btn-primary {
+  background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+  color: white;
   box-shadow: 
     0 10px 30px rgba(123, 44, 191, 0.4),
     0 0 20px rgba(157, 78, 221, 0.3);
-  pointer-events: auto;
 }
 
 .ls-btn-primary:hover {
-  transform: translateY(-2px);
+  transform: translateY(-3px);
   box-shadow: 
     0 15px 40px rgba(123, 44, 191, 0.6),
     0 0 30px rgba(157, 78, 221, 0.4);
-  background: linear-gradient(135deg, #9d4edd, #c77dff);
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
 }
 
+.ls-btn-primary:active {
+  transform: translateY(-1px);
+}
+
+/* Botão glass */
 .ls-btn-glass {
   background: var(--glass);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   color: white;
   border: 1px solid var(--glass-border);
-  padding: 18px 45px;
-  border-radius: 50px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: 0.3s;
-  pointer-events: auto;
 }
 
 .ls-btn-glass:hover {
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
+  background: var(--glass-hover);
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--shadow-lg);
 }
 
+/* Container dos cards hero */
 .ls-hero-cards {
   position: relative;
-  height: 550px;
+  height: 500px;
   pointer-events: auto;
+  animation: fadeIn 1s ease 1s both;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: var(--spacing-xl);
 }
 
-/* --- 6. CONTEÚDO LIQUID GLASS TRANSPARENTE --- */
+/* Container do CardSwap - reduzido globalmente */
+.card-swap-container {
+  position: relative;
+  width: 100%;
+  max-width: 350px;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* --- 7. CARDS COM GLASS MORPHISM --- */
 .ls-content-glass {
-  /* Efeito Glass Surface */
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(25px) saturate(1.8) brightness(1.05);
-  -webkit-backdrop-filter: blur(25px) saturate(1.8) brightness(1.05);
+  /* Glass Morphism Premium */
+  background: rgba(255, 255, 255, 0.08);
+  -webkit-backdrop-filter: blur(30px) saturate(180%) brightness(1.05);
+  backdrop-filter: blur(30px) saturate(180%) brightness(1.05);
   
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 30px;
-  padding: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xxl);
   width: 100%;
   max-width: 1000px;
   pointer-events: auto;
   
-  /* Sombras do Glass Surface */
+  /* Sistema de sombras complexo */
   box-shadow:
-    0 0 2px 1px rgba(0, 0, 0, 0.1) inset,
-    0 0 10px 4px rgba(0, 0, 0, 0.08) inset,
-    0px 4px 16px rgba(17, 17, 26, 0.1),
-    0px 8px 24px rgba(17, 17, 26, 0.1),
-    0px 16px 56px rgba(17, 17, 26, 0.1),
-    0px 4px 16px rgba(17, 17, 26, 0.05) inset,
-    0px 8px 24px rgba(17, 17, 26, 0.05) inset,
-    0px 16px 56px rgba(17, 17, 26, 0.05) inset,
-    
-    /* Sombras roxas suaves */
-    0 0 40px rgba(157, 78, 221, 0.1),
-    0 0 80px rgba(157, 78, 221, 0.05);
+    inset 0 1px 0 rgba(255, 255, 255, 0.05),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+    inset 0 0 40px rgba(0, 0, 0, 0.1),
+    0 8px 32px rgba(0, 0, 0, 0.25),
+    0 16px 48px rgba(0, 0, 0, 0.15),
+    0 32px 64px rgba(0, 0, 0, 0.1),
+    0 0 60px rgba(157, 78, 221, 0.1),
+    0 0 120px rgba(157, 78, 221, 0.05);
+  
+  transition: all var(--transition-normal);
 }
 
-/* CARDS COM GLASS SURFACE EFFECT */
+.ls-content-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+    inset 0 0 50px rgba(0, 0, 0, 0.15),
+    0 12px 48px rgba(0, 0, 0, 0.3),
+    0 24px 64px rgba(0, 0, 0, 0.2),
+    0 48px 96px rgba(0, 0, 0, 0.15),
+    0 0 80px rgba(157, 78, 221, 0.15),
+    0 0 160px rgba(157, 78, 221, 0.08);
+}
+
+/* Cards individuais */
 .ls-card-glass {
-  /* Efeito Glass Surface */
-  background: rgba(255, 255, 255, 0.12);
-  backdrop-filter: blur(20px) saturate(1.8) brightness(1.1);
-  -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.1);
+  /* Glass Morphism mais intenso */
+  background: rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
+  backdrop-filter: blur(25px) saturate(180%) brightness(1.1);
   
   border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 25px;
-  padding: 40px;
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-lg);
   width: 100%;
+  max-width: 320px;
   pointer-events: auto;
-  
-  /* Sombras do Glass Surface */
-  box-shadow:
-    0 0 2px 1px rgba(0, 0, 0, 0.08) inset,
-    0 0 8px 3px rgba(0, 0, 0, 0.06) inset,
-    0px 4px 12px rgba(17, 17, 26, 0.08),
-    0px 8px 16px rgba(17, 17, 26, 0.08),
-    0px 16px 32px rgba(17, 17, 26, 0.08),
-    0px 4px 12px rgba(17, 17, 26, 0.04) inset,
-    0px 8px 16px rgba(17, 17, 26, 0.04) inset,
-    0px 16px 32px rgba(17, 17, 26, 0.04) inset,
-    
-    /* Sombras roxas suaves */
-    0 0 30px rgba(157, 78, 221, 0.1),
-    0 0 60px rgba(157, 78, 221, 0.05);
-  
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
   overflow: hidden;
+  transition: all var(--transition-normal);
 }
 
-/* Efeito de borda luminosa nos cards */
+/* Borda gradiente luminosa */
 .ls-card-glass::before {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 25px;
+  border-radius: inherit;
   padding: 1px;
   background: linear-gradient(
     135deg,
     rgba(157, 78, 221, 0.4) 0%,
-    rgba(255, 255, 255, 0.15) 50%,
+    rgba(255, 255, 255, 0.2) 50%,
     rgba(157, 78, 221, 0.2) 100%
   );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   pointer-events: none;
   opacity: 0.6;
 }
 
-/* Efeito de brilho interno nos cards */
+/* Efeito de brilho interno (scanline) */
 .ls-card-glass::after {
   content: '';
   position: absolute;
@@ -440,29 +687,22 @@ body {
   left: 100%;
 }
 
+/* Hover effects */
 .ls-card-glass:hover {
-  transform: translateY(-8px);
+  transform: translateY(-10px);
+  background: rgba(255, 255, 255, 0.14);
+  -webkit-backdrop-filter: blur(30px) saturate(200%) brightness(1.15);
+  backdrop-filter: blur(30px) saturate(200%) brightness(1.15);
   
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(25px) saturate(2) brightness(1.15);
-  -webkit-backdrop-filter: blur(25px) saturate(2) brightness(1.15);
-  
+  border-color: rgba(255, 255, 255, 0.3);
   box-shadow:
-    0 0 2px 1px rgba(0, 0, 0, 0.12) inset,
-    0 0 12px 6px rgba(0, 0, 0, 0.08) inset,
-    0px 8px 32px rgba(17, 17, 26, 0.12),
-    0px 16px 48px rgba(17, 17, 26, 0.12),
-    0px 32px 64px rgba(17, 17, 26, 0.12),
-    0px 4px 16px rgba(17, 17, 26, 0.06) inset,
-    0px 8px 24px rgba(17, 17, 26, 0.06) inset,
-    0px 16px 56px rgba(17, 17, 26, 0.06) inset,
-    
-    /* Sombras roxas mais intensas no hover */
-    0 0 40px rgba(157, 78, 221, 0.15),
-    0 0 80px rgba(157, 78, 221, 0.08);
+    0 20px 60px rgba(0, 0, 0, 0.3),
+    0 40px 80px rgba(0, 0, 0, 0.2),
+    0 0 60px rgba(157, 78, 221, 0.15),
+    0 0 120px rgba(157, 78, 221, 0.08);
 }
 
-/* Conteúdo dos cards (acima dos efeitos) */
+/* Conteúdo dos cards */
 .ls-card-glass > * {
   position: relative;
   z-index: 2;
@@ -470,12 +710,12 @@ body {
 
 /* Títulos dos cards */
 .card-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: var(--spacing-md);
+  color: white;
   position: relative;
   display: inline-block;
-  color: white;
 }
 
 .card-title::after {
@@ -486,220 +726,577 @@ body {
   width: 40px;
   height: 2px;
   background: linear-gradient(90deg, var(--primary), transparent);
-  border-radius: 2px;
+  border-radius: 1px;
 }
 
 /* Texto dos cards */
 .card-text {
   color: var(--text-dim);
   line-height: 1.7;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 300;
 }
 
-/* Timeline */
+/* --- 8. SEÇÃO TECNOLOGIAS --- */
+.ls-tech-container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: var(--spacing-xxl) var(--spacing-xl);
+  pointer-events: auto;
+  position: relative;
+}
+
+.ls-tech-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  text-align: center;
+  margin-bottom: var(--spacing-lg);
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fadeInUp 0.8s ease both;
+}
+
+.ls-tech-subtitle {
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: var(--spacing-xxl);
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6;
+}
+
+/* Grid de tecnologias */
+.ls-tech-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
+}
+
+.tech-card {
+  background: rgba(255, 255, 255, 0.06);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(157, 78, 221, 0.15);
+  border-radius: var(--border-radius-lg);
+  padding: var(--spacing-xl);
+  text-align: center;
+  transition: all var(--transition-normal);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Borda gradiente */
+.tech-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    135deg,
+    rgba(157, 78, 221, 0.3) 0%,
+    rgba(255, 255, 255, 0.1) 50%,
+    rgba(157, 78, 221, 0.1) 100%
+  );
+  -webkit-mask: 
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: destination-out;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.tech-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(157, 78, 221, 0.3);
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.3),
+    0 0 40px rgba(157, 78, 221, 0.2),
+    0 0 80px rgba(157, 78, 221, 0.1);
+}
+
+.tech-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-lg);
+  color: var(--primary);
+  display: block;
+}
+
+.tech-card h4 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: var(--spacing-md);
+  color: white;
+}
+
+.tech-card p {
+  color: var(--text-dim);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* --- 9. TIMELINE --- */
 .ls-timeline {
   border-left: 2px solid rgba(157, 78, 221, 0.2);
-  padding-left: 40px;
-  margin-top: 30px;
+  padding-left: var(--spacing-xl);
+  margin-top: var(--spacing-xl);
 }
 
 .timeline-item {
   position: relative;
-  margin-bottom: 45px;
+  margin-bottom: var(--spacing-xxl);
+  padding: var(--spacing-md) 0;
 }
 
 .timeline-item::before {
   content: '';
   position: absolute;
-  left: -51px;
-  top: 8px;
+  left: -49px;
+  top: 32px;
   width: 20px;
   height: 20px;
   background: var(--primary);
   border-radius: 50%;
   box-shadow: 
-    0 0 20px #9d4edd,
+    0 0 20px var(--primary),
     0 0 40px rgba(157, 78, 221, 0.5);
+  z-index: 2;
+}
+
+.timeline-item::after {
+  content: '';
+  position: absolute;
+  left: -42px;
+  top: 32px;
+  width: 6px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary), transparent);
+  opacity: 0.3;
 }
 
 .date {
   color: var(--primary);
   font-weight: 600;
   font-size: 0.9rem;
-  margin-bottom: 8px;
+  margin-bottom: var(--spacing-xs);
   display: block;
+  letter-spacing: 1px;
 }
 
 .timeline-item h4 {
   font-size: 1.3rem;
-  margin-bottom: 10px;
+  margin-bottom: var(--spacing-sm);
   color: white;
+  font-weight: 700;
 }
 
 .timeline-item p {
   color: var(--text-dim);
-  line-height: 1.6;
+  line-height: 1.7;
   font-weight: 300;
+  max-width: 600px;
 }
 
-/* Skills Grid */
-.ls-skills-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 30px;
-  width: 100%;
-  max-width: 1000px;
-}
-
-.tag-cloud {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.tag-cloud span {
-  padding: 10px 20px;
-  
-  /* Efeito Glass Surface para as tags */
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px) saturate(1.5);
-  -webkit-backdrop-filter: blur(10px) saturate(1.5);
-  
-  border: 1px solid rgba(157, 78, 221, 0.3);
-  border-radius: 10px;
-  font-size: 0.9rem;
-  font-weight: 400;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  cursor: default;
+/* Títulos de seção */
+.section-title {
+  font-size: 2.5rem;
+  font-weight: 900;
+  margin-bottom: var(--spacing-xl);
   color: white;
-  
-  box-shadow:
-    0 2px 8px rgba(0, 0, 0, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  text-align: center;
+  position: relative;
+  display: inline-block;
+  width: 100%;
 }
 
-.tag-cloud span:hover {
-  background: rgba(157, 78, 221, 0.25);
-  backdrop-filter: blur(15px) saturate(1.8);
-  -webkit-backdrop-filter: blur(15px) saturate(1.8);
-  
-  border-color: rgba(157, 78, 221, 0.4);
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--primary), transparent);
+  border-radius: 2px;
+}
+
+/* --- 10. SEÇÃO CONTATO --- */
+.contact-content {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-content .card-text {
+  margin-bottom: var(--spacing-xxl);
+  font-size: 1.1rem;
+}
+
+.contact-content .ls-btn-group {
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+}
+
+/* Botão WhatsApp premium */
+.whatsapp-btn {
+  background: linear-gradient(135deg, var(--whatsapp-green), var(--whatsapp-green-dark));
+  color: white;
+  border: none;
+  padding: 18px 45px;
+  border-radius: var(--border-radius-full);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 
+    0 10px 30px rgba(37, 211, 102, 0.4),
+    0 0 20px rgba(37, 211, 102, 0.3);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.whatsapp-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.7s ease;
+}
+
+.whatsapp-btn:hover::before {
+  left: 100%;
+}
+
+.whatsapp-btn:hover {
   transform: translateY(-3px);
   box-shadow: 
-    0 5px 20px rgba(157, 78, 221, 0.3),
-    0 0 15px rgba(157, 78, 221, 0.2),
-    inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    0 15px 40px rgba(37, 211, 102, 0.6),
+    0 0 30px rgba(37, 211, 102, 0.4);
+  background: linear-gradient(135deg, var(--whatsapp-green), #1da851);
 }
 
-/* --- 7. RESPONSIVIDADE --- */
-@media (max-width: 1100px) {
-  .ls-hero-container { gap: 40px; }
-  .ls-title { font-size: 3rem; }
-  .ls-skills-grid { gap: 20px; }
+.whatsapp-icon {
+  font-size: 1.3rem;
+  animation: pulse 2s ease-in-out infinite;
 }
 
-@media (max-width: 968px) {
-  .ls-section {
-    padding: 0 20px;
-    /* CORREÇÃO: Garantir que o conteúdo fique abaixo do menu */
-    padding-top: 100px;
-    min-height: calc(100vh - 100px);
-    align-items: flex-start;
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+/* Botão LinkedIn */
+.linkedin-btn {
+  background: linear-gradient(135deg, var(--linkedin-blue), #004182);
+  color: white;
+  border: none;
+  padding: 18px 45px;
+  border-radius: var(--border-radius-full);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 10px 30px rgba(10, 102, 194, 0.3);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.linkedin-btn:hover {
+  background: linear-gradient(135deg, #0A66C2, #004182);
+}
+
+/* Botão GitHub */
+.github-btn {
+  background: linear-gradient(135deg, var(--github-gray), #24292e);
+  color: white;
+  border: none;
+  padding: 18px 45px;
+  border-radius: var(--border-radius-full);
+  font-family: inherit;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  box-shadow: 0 10px 30px rgba(51, 51, 51, 0.3);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-width: 200px;
+  position: relative;
+  overflow: hidden;
+}
+
+.github-btn:hover {
+  background: linear-gradient(135deg, #333, #24292e);
+}
+
+/* --- 11. RESPONSIVIDADE --- */
+
+/* Desktop grande (1440px+) */
+@media (min-width: 1440px) {
+  .ls-hero-container {
+    max-width: 1400px;
   }
+  
+  .ls-content-glass {
+    max-width: 1200px;
+  }
+}
 
+/* Tablet grande (1100px) */
+@media (max-width: 1100px) {
+  .ls-hero-container { 
+    gap: var(--spacing-xl); 
+  }
+  
+  .ls-title { 
+    font-size: 3rem; 
+  }
+  
+  .ls-description {
+    font-size: 1.05rem;
+    max-width: 500px;
+  }
+  
+  /* Tecnologias - 3 colunas */
+  .ls-tech-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--spacing-lg);
+  }
+  
+  .tech-card {
+    padding: var(--spacing-lg);
+  }
+  
+  .tech-icon {
+    font-size: 2.2rem;
+  }
+  
+  .tech-card h4 {
+    font-size: 1.2rem;
+  }
+  
+  .tech-card p {
+    font-size: 0.9rem;
+  }
+  
+  /* Navbar */
+  .ls-navbar {
+    width: 95%;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    top: var(--spacing-lg);
+  }
+  
+  .ls-content-glass {
+    padding: var(--spacing-xl);
+  }
+}
+
+/* Tablet (768px) */
+@media (max-width: 768px) {
+  .ls-main-content {
+    padding-top: 100px;
+  }
+  
+  .ls-section {
+    padding: var(--spacing-xl) var(--spacing-lg);
+    min-height: auto;
+    height: auto;
+  }
+  
   .ls-hero-container {
     grid-template-columns: 1fr;
     text-align: center;
-    padding-top: 40px; /* Reduzido porque já temos padding-top na section */
-    gap: 40px;
-    justify-items: center;
-    margin-top: 0;
-    /* CORREÇÃO: Garantir que o título não fique atrás do menu */
-    margin-top: 20px;
+    gap: var(--spacing-xl);
   }
   
   .ls-hero-text {
-    display: flex;
-    flex-direction: column;
     align-items: center;
+    text-align: center;
   }
-
+  
   .ls-description {
-    margin-bottom: 30px;
+    max-width: 100%;
+    margin-bottom: var(--spacing-lg);
   }
   
   .ls-hero-cards {
     height: 400px;
+    max-width: 380px;
     width: 100%;
-    max-width: 450px;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
   }
-
+  
   .ls-btn-group { 
     flex-direction: column; 
     width: 100%; 
-    max-width: 320px; 
-    margin-bottom: 20px;
+    max-width: 320px;
+    margin: 0 auto;
+    gap: var(--spacing-md);
   }
   
-  .ls-btn-primary, .ls-btn-glass {
-    padding: 15px 30px;
-  }
-
-  .ls-skills-grid { 
-    grid-template-columns: 1fr;
-    gap: 20px;
+  .ls-btn {
+    width: 100%;
+    padding: 16px 32px;
   }
   
   .ls-content-glass { 
-    padding: 40px 25px;
-    margin: 0 20px;
-    margin-top: 20px; /* Espaço extra do menu */
+    padding: var(--spacing-xl) var(--spacing-lg);
   }
   
   .ls-card-glass {
-    padding: 30px;
+    padding: var(--spacing-md);
+  }
+
+  .card-swap-container {
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .card-title {
+    font-size: 1.3rem;
+  }
+
+  .card-text {
+    font-size: 0.98rem;
   }
   
   .ls-menu-links a {
     font-size: 2.5rem;
+    margin: var(--spacing-md) 0;
   }
   
-  /* Ajustes do navbar no mobile */
   .ls-navbar {
-    padding: 12px 25px;
-    backdrop-filter: blur(10px) saturate(1.6) brightness(1.1);
-    -webkit-backdrop-filter: blur(10px) saturate(1.6) brightness(1.1);
-    top: 20px; /* Posicionamento mais alto no mobile */
+    padding: 10px 20px;
+    top: var(--spacing-md);
   }
   
-  /* Ajustes do menu móvel para não sobrepor */
-  .ls-mobile-menu {
-    padding-top: 100px;
+  /* Tecnologias - 2 colunas */
+  .ls-tech-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-md);
   }
   
-  .ls-menu-links {
-    margin-top: 50px;
+  .ls-tech-container {
+    padding: var(--spacing-xl) var(--spacing-lg);
+  }
+  
+  .ls-tech-title {
+    font-size: 2rem;
+  }
+  
+  .ls-tech-subtitle {
+    font-size: 1rem;
+    margin-bottom: var(--spacing-xl);
+  }
+  
+  .tech-card {
+    padding: var(--spacing-md);
+  }
+  
+  .tech-icon {
+    font-size: 2rem;
+    margin-bottom: var(--spacing-md);
+  }
+  
+  .tech-card h4 {
+    font-size: 1.1rem;
+  }
+  
+  .tech-card p {
+    font-size: 0.85rem;
+  }
+  
+  /* Timeline */
+  .ls-timeline {
+    padding-left: var(--spacing-lg);
+  }
+  
+  .timeline-item::before {
+    left: -37px;
+    width: 16px;
+    height: 16px;
+  }
+  
+  .timeline-item h4 {
+    font-size: 1.2rem;
   }
 }
 
+/* Mobile (480px) */
 @media (max-width: 480px) {
+  .ls-main-content {
+    padding-top: 100px;
+  }
+  
+  .ls-section {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
   .ls-title {
     font-size: 2.2rem;
+  }
+  
+  .ls-badge {
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    padding: 6px 12px;
   }
   
   .ls-description {
     font-size: 1rem;
   }
   
+  .ls-btn {
+    padding: 14px 28px;
+    font-size: 0.9rem;
+    min-width: auto;
+  }
+  
+  .whatsapp-btn {
+    min-width: auto;
+  }
+  
   .ls-card-glass {
-    padding: 25px;
-    border-radius: 20px;
+    padding: var(--spacing-md);
   }
   
   .card-title {
@@ -707,97 +1304,313 @@ body {
   }
   
   .card-text {
-    font-size: 0.9rem;
+    font-size: 0.95rem;
   }
-  
-  /* CORREÇÃO ESPECÍFICA PARA TELAS PEQUENAS */
-  .ls-section {
-    padding-top: 120px; /* Mais espaço para o menu */
-    padding-bottom: 40px;
-    min-height: calc(100vh - 120px);
+
+  .ls-hero-cards {
+    height: 320px;
+    max-width: 420px;
+    width: 100%;
+    margin: 0 auto 12px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  
-  .ls-hero-container {
-    padding-top: 20px; /* Reduzido porque já temos padding-top na section */
-    margin-top: 10px;
-  }
-  
-  .ls-navbar {
-    margin-top: 15px;
-    padding: 10px 20px;
-    width: 95%;
-    top: 15px; /* Mais alto em telas muito pequenas */
+
+  .card-swap-container {
+    max-width: 280px;
+    margin: 0 auto;
   }
   
   .ls-logo {
     font-size: 1rem;
+    letter-spacing: 2px;
   }
   
   .ls-menu-links a {
     font-size: 2rem;
+    margin: var(--spacing-sm) 0;
   }
   
-  /* Ajuste específico para garantir que o texto não fique atrás do menu */
+  /* Tecnologias - 1 coluna */
+  .ls-tech-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .ls-tech-container {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+  
+  .ls-tech-title {
+    font-size: 1.8rem;
+  }
+  
+  .ls-tech-subtitle {
+    font-size: 0.95rem;
+    padding: 0 var(--spacing-md);
+  }
+  
+  .tech-card {
+    padding: var(--spacing-md);
+  }
+  
+  .tech-card:hover {
+    transform: translateY(-5px) scale(1.02);
+  }
+}
+
+/* Mobile pequeno (360px) */
+@media (max-width: 400px) {
+  .ls-hero-cards {
+    height: 280px;
+    max-width: 260px;
+    width: 100%;
+    margin: 0 auto 12px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .card-swap-container {
+    max-width: 260px;
+    margin: 0 auto;
+  }
+
+  .ls-card-glass {
+    padding: var(--spacing-sm);
+  }
+
+  .card-title {
+    font-size: 1.25rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* Mobile pequeno (360px) */
+@media (max-width: 360px) {
+  .ls-title {
+    font-size: 1.9rem;
+  }
+  
+  .ls-badge {
+    font-size: 0.65rem;
+  }
+  
+  .ls-btn {
+    padding: 12px 24px;
+    font-size: 0.85rem;
+  }
+  
+  .ls-tech-grid {
+    gap: var(--spacing-sm);
+  }
+  
+  .tech-card {
+    padding: 16px 12px;
+  }
+  
+  .tech-icon {
+    font-size: 1.8rem;
+  }
+  
+  .tech-card h4 {
+    font-size: 1rem;
+  }
+  
+  .tech-card p {
+    font-size: 0.8rem;
+  }
+
+  /* Hero adjustments for very small screens */
+  .ls-hero-cards {
+    height: 260px;
+  }
+
+  .card-swap-container {
+    max-width: 240px;
+  }
+
+  .ls-card-glass {
+    padding: var(--spacing-sm);
+  }
+
+  .card-title {
+    font-size: 1.2rem;
+  }
+
+  .card-text {
+    font-size: 0.85rem;
+  }
+}
+
+/* Landscape mode */
+@media (max-height: 600px) and (orientation: landscape) {
+  .ls-main-content {
+    padding-top: 80px;
+  }
+  
+  .ls-section {
+    min-height: 100vh;
+    padding-top: 40px;
+  }
+  
+  .ls-hero-container {
+    margin-top: 0;
+  }
+  
   .ls-hero-text {
     padding-top: 0;
   }
+  
+  .ls-tech-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--spacing-sm);
+  }
+  
+  .tech-card {
+    padding: var(--spacing-sm);
+  }
 }
 
-/* Ajuste do container do Aurora */
-.aurora-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
+/* Small-height devices: keep hero visible on shorter screens */
+@media (max-height: 812px) {
+  .ls-hero-cards {
+    height: 460px;
+  }
+
+  .card-swap-container {
+    max-width: 320px;
+  }
 }
 
-/* Garanta que o background fixed cubra tudo */
-.ls-background-fixed {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 1;
-  pointer-events: none;
-  background: #020205;
-  overflow: hidden;
-}
+/* --- 366x816 Mobile specific tweaks --- */
+@media (max-width: 366px) and (max-height: 816px) {
+  /* Main layout */
+  .ls-hero-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 0 12px;
+    align-items: center;
+  }
 
-/* Opcional: Ajuste o overlay para dar mais profundidade à aurora */
-.content-overlay {
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(
-    circle at center,
-    transparent 0%,
-    rgba(2, 2, 5, 0.4) 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-}
+  .ls-hero-text {
+    width: 100%;
+    text-align: center;
+    padding-top: 8px;
+  }
 
-/* Estilo para garantir que o conteúdo não fique atrás do menu fixo */
-.ls-main-scroll {
-  position: relative;
-  z-index: 10;
-  height: 100vh;
-  overflow-y: auto;
-  scroll-snap-type: y mandatory;
-  scrollbar-width: none;
-  padding-top: 80px; /* Espaço para o menu fixo */
-}
+  .ls-title {
+    font-size: 1.8rem;
+    line-height: 1.15;
+  }
 
-@media (max-width: 968px) {
+  .ls-description {
+    font-size: 0.95rem;
+    max-width: 100%;
+    padding: 0 8px;
+    margin: 0 auto 8px auto;
+  }
+
+  .ls-btn-group {
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  /* CardSwap adjustments */
+  .ls-hero-cards {
+    height: auto;
+    max-width: 360px;
+    width: 92%;
+    margin: 0 auto 12px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: auto;
+  }
+
+  /* Ensure CardSwap container centers and scales nicely */
+  .card-swap-container {
+    position: relative !important;
+    bottom: auto !important;
+    right: auto !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 260px !important;
+    margin: 0 auto;
+    perspective: 800px !important;
+  }
+
+  .card {
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    width: calc(100% - 28px) !important;
+    max-width: 320px !important;
+    padding: 12px 14px !important;
+    border-radius: 14px !important;
+    box-shadow: 0 10px 28px rgba(0,0,0,0.45) !important;
+  }
+
+  /* Navbar compact */
+  .ls-navbar {
+    top: 10px;
+    padding: 8px 12px;
+    width: 96%;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  /* Main scroll padding to keep hero visible */
   .ls-main-scroll {
-    padding-top: 100px; /* Mais espaço no mobile */
+    padding-top: 88px;
+  }
+
+  /* Reduce large glass containers spacing */
+  .ls-content-glass,
+  .ls-card-glass,
+  .tech-card {
+    padding: var(--spacing-lg) !important;
+  }
+
+  /* Footer/sections spacing tweaks */
+  .ls-section {
+    padding: var(--spacing-lg) var(--spacing-md) !important;
+  }
+}
+/* Espaçador entre botões e cards (visível apenas em mobile) */
+.button-cards-spacer {
+  display: none;
+  height: 0;
+}
+
+@media (max-width: 768px) {
+  .button-cards-spacer {
+    display: block;
+    height: var(--spacing-xl); /* 32px em tablet */
+    width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .ls-main-scroll {
-    padding-top: 120px; /* Ainda mais espaço em telas pequenas */
+  .button-cards-spacer {
+    height: var(--spacing-xxl); /* 48px em mobile */
+  }
+}
+
+@media (max-width: 360px) {
+  .button-cards-spacer {
+    height: 40px; /* 40px em telas muito pequenas */
   }
 }
