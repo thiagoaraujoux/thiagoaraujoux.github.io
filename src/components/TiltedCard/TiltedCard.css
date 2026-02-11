@@ -61,33 +61,22 @@
   border-radius: var(--border-radius-md);
   will-change: transform;
   transform: translateZ(0);
-  box-shadow: 
-    0 15px 35px rgba(0, 0, 0, 0.4),
-    0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: none;
   transition: box-shadow 0.3s ease;
   display: block;
 }
 
 .tilted-card-inner:hover .tilted-card-img {
-  box-shadow: 
-    0 25px 50px rgba(0, 0, 0, 0.6),
-    0 10px 25px rgba(0, 0, 0, 0.4),
-    0 0 40px rgba(157, 78, 221, 0.3);
+  box-shadow: none;
   filter: brightness(1.05);
 }
 
 .project-image-wrapper {
-  box-shadow: 
-    0 20px 60px rgba(0, 0, 0, 0.4),
-    0 10px 30px rgba(0, 0, 0, 0.3),
-    0 0 40px rgba(157, 78, 221, 0.2);
+  box-shadow: none;
 }
 
 .project-image-wrapper:hover {
-  box-shadow: 
-    0 30px 80px rgba(0, 0, 0, 0.5),
-    0 15px 40px rgba(0, 0, 0, 0.4),
-    0 0 60px rgba(157, 78, 221, 0.4);
+  box-shadow: none;
 }
 
 .tilted-card-overlay {
@@ -133,7 +122,6 @@
   font-weight: 800;
   margin: 0;
   letter-spacing: 0.5px;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
   animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
@@ -144,7 +132,6 @@
   margin: 0;
   letter-spacing: 1px;
   text-transform: uppercase;
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
   animation: fadeInUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) 0.1s both;
 }
 
@@ -173,9 +160,7 @@
   opacity: 0;
   z-index: 100;
   white-space: nowrap;
-  box-shadow: 
-    0 4px 15px rgba(0, 0, 0, 0.3),
-    0 0 20px rgba(157, 78, 221, 0.3);
+  box-shadow: none;
   transform: translateZ(40px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);

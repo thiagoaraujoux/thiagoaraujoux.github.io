@@ -9,8 +9,7 @@ const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 968);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [touchStartX, setTouchStartX] = useState(0);
-  const [touchEndX, setTouchEndX] = useState(0);
+  const [gestureStartX, setGestureStartX] = useState(null);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -118,14 +117,21 @@ const Portfolio = () => {
   ];
 
   // Touch handlers para swipe no carrossel mobile
-  const handleTouchStart = (e) => {
-    setTouchStartX(e.targetTouches[0].clientX);
+  const handleGestureStart = (x) => {
+    setGestureStartX(x);
   };
 
-  const handleTouchEnd = (e) => {
-    setTouchEndX(e.changedTouches[0].clientX);
-    handleSwipe(touchStartX, e.changedTouches[0].clientX);
+  const handleGestureEnd = (x) => {
+    if (gestureStartX === null) return;
+    handleSwipe(gestureStartX, x);
+    setGestureStartX(null);
   };
+
+  const handleTouchStart = (e) => handleGestureStart(e.targetTouches[0].clientX);
+  const handleTouchEnd = (e) => handleGestureEnd(e.changedTouches[0].clientX);
+  const handleMouseDown = (e) => handleGestureStart(e.clientX);
+  const handleMouseUp = (e) => handleGestureEnd(e.clientX);
+  const handleMouseLeave = () => setGestureStartX(null);
 
   const handleSwipe = (startX, endX) => {
     const distance = startX - endX;
@@ -313,6 +319,9 @@ const Portfolio = () => {
                       className="carousel-track"
                       onTouchStart={handleTouchStart}
                       onTouchEnd={handleTouchEnd}
+                      onMouseDown={handleMouseDown}
+                      onMouseUp={handleMouseUp}
+                      onMouseLeave={handleMouseLeave}
                     >
                       {projects.map((project, index) => (
                         <div
@@ -351,19 +360,6 @@ const Portfolio = () => {
                         </div>
                       ))}
                     </div>
-
-                    {/* Controles do carrossel */}
-                    <button className="carousel-btn prev" onClick={prevProject}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M15 18l-6-6 6-6" />
-                      </svg>
-                    </button>
-
-                    <button className="carousel-btn next" onClick={nextProject}>
-                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                        <path d="M9 18l6-6-6-6" />
-                      </svg>
-                    </button>
 
                     {/* Indicadores */}
                     <div className="carousel-indicators">
