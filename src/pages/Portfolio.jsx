@@ -1,11 +1,16 @@
 import React, { useState, useRef, useEffect } from 'react';
 import CardSwap, { Card } from '../components/CardSwap/CardSwap';
 import Aurora from '../components/Aurora/Aurora';
+import TiltedCard from '../components/TiltedCard/TiltedCard';
+import ShinyText from '../components/ShinyText/ShinyText';
 import './Portfolio.css';
 
 const Portfolio = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 968);
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [touchStartX, setTouchStartX] = useState(0);
+  const [touchEndX, setTouchEndX] = useState(0);
 
   const closeMenu = () => setIsMenuOpen(false);
 
@@ -21,7 +26,7 @@ const Portfolio = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, [isMenuOpen]);
 
-  // Acompanhar tamanho da janela para responsividade do CardSwap
+  // Acompanhar tamanho da janela para responsividade
   useEffect(() => {
     const handleResize = () => {
       setWindowWidth(window.innerWidth);
@@ -62,17 +67,104 @@ const Portfolio = () => {
   };
 
   const handleProjectsClick = () => {
-    // Implementar navegação para projetos
-    console.log('Ver projetos clicado');
+    const projectsSection = document.getElementById('projects');
+    if (projectsSection) {
+      projectsSection.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const handleDownloadCV = () => {
     window.open('/cv-thiago-araujo.pdf', '_blank');
   };
 
+  // Dados dos projetos
+  const projects = [
+    {
+      id: 1,
+      title: "Sistema de Infraestrutura",
+      subtitle: "DevOps & Cloud",
+      image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Arquitetura de containerização e orquestração com Docker e VMware.",
+      technologies: ["Docker", "VMware", "Linux", "GitHub Actions"],
+      link: "#"
+    },
+    {
+      id: 2,
+      title: "Portfolio Moderno",
+      subtitle: "UI/UX & Frontend",
+      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Interface interativa com efeitos 3D, partículas e animações fluidas.",
+      technologies: ["React", "Motion", "CSS 3D", "Framer Motion"],
+      link: "https://github.com/thiagoaraujoux"
+    },
+    {
+      id: 3,
+      title: "Dashboard SEDUC-TO",
+      subtitle: "BI & Data Visualization",
+      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Painel de controle em tempo real para monitoramento educacional com Power BI e APIs.",
+      technologies: ["Power BI", "React", "Node.js", "SQL Server"],
+      link: "#"
+    },
+    {
+      id: 4,
+      title: "Automações & Chatbot",
+      subtitle: "RPA & IA Conversacional",
+      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+      description: "Sistema de automação de processos com chatbot integrado para atendimento inteligente.",
+      technologies: ["Python", "RPA", "OpenAI API", "Flask", "WhatsApp API"],
+      link: "#"
+    }
+  ];
+
+  // Touch handlers para swipe no carrossel mobile
+  const handleTouchStart = (e) => {
+    setTouchStartX(e.targetTouches[0].clientX);
+  };
+
+  const handleTouchEnd = (e) => {
+    setTouchEndX(e.changedTouches[0].clientX);
+    handleSwipe(touchStartX, e.changedTouches[0].clientX);
+  };
+
+  const handleSwipe = (startX, endX) => {
+    const distance = startX - endX;
+    const threshold = 40; // Reduzido para ser mais responsivo
+
+    if (Math.abs(distance) > threshold) {
+      if (distance > 0) {
+        // Swipe para esquerda - próximo projeto
+        nextProject();
+      } else {
+        // Swipe para direita - projeto anterior
+        prevProject();
+      }
+    }
+  };
+
+  // Navegação do carrossel
+  const nextProject = () => {
+    setCurrentProjectIndex((prevIndex) =>
+      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
+    );
+  };
+
+  const prevProject = () => {
+    setCurrentProjectIndex((prevIndex) =>
+      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToProject = (index) => {
+    setCurrentProjectIndex(index);
+  };
+
+  // Determinar se é mobile baseado na largura
+  const isMobile = windowWidth <= 768;
+
   return (
     <div className="ls-wrapper">
-      {/* BACKGROUND COM PARTICULAS - Mantenha a estrutura que está funcionando */}
+
       <div className="ls-background-fixed">
         <Aurora
           particleCount={550}
@@ -112,13 +204,14 @@ const Portfolio = () => {
       <div className={`ls-mobile-menu ${isMenuOpen ? 'active' : ''}`}>
         <div className="ls-menu-links">
           <a href="#home" onClick={closeMenu}>INÍCIO</a>
+          <a href="#projects" onClick={closeMenu}>PROJETOS</a>
           <a href="#exp" onClick={closeMenu}>EXPERIÊNCIA</a>
           <a href="#skills" onClick={closeMenu}>TECNOLOGIAS</a>
           <a href="#contact" onClick={closeMenu}>CONTATO</a>
         </div>
       </div>
 
-      {/* MAIN CONTENT - Use a classe que está funcionando */}
+      {/* MAIN CONTENT */}
       <div className="ls-main-scroll">
         {/* Seção Hero */}
         <section id="home" className="ls-section">
@@ -131,13 +224,13 @@ const Portfolio = () => {
                 Especialista em unir hardware, software e inteligência de dados com foco em UX/UI.
               </p>
               <div className="ls-btn-group">
-                <button 
+                <button
                   className="ls-btn-primary"
                   onClick={handleProjectsClick}
                 >
                   Ver Projetos
                 </button>
-                <button 
+                <button
                   className="ls-btn-glass"
                   onClick={handleDownloadCV}
                 >
@@ -145,12 +238,11 @@ const Portfolio = () => {
                 </button>
               </div>
             </div>
- {/* DIV DE ESPAÇAMENTO VISÍVEL APENAS EM MOBILE */}
-  <div className="button-cards-spacer"></div>
-
+            {/* DIV DE ESPAÇAMENTO VISÍVEL APENAS EM MOBILE */}
+            <div className="button-cards-spacer"></div>
 
             <div className="ls-hero-cards">
-              <CardSwap cardDistance={windowWidth < 400 ? 10 : (windowWidth < 768 ? 15 : 30)}>
+              <CardSwap cardDistance={windowWidth < 400 ? 5 : (windowWidth < 768 ? 8 : 15)}>
                 <Card>
                   <div className="ls-card-glass">
                     <h3 className="card-title">Fullstack Dev</h3>
@@ -168,9 +260,146 @@ const Portfolio = () => {
           </div>
         </section>
 
+        {/* SEÇÃO: PROJETOS DESTAQUE - ATUALIZADO */}
+        <section id="projects" className="ls-section">
+          <div className="ls-projects-container">
+            <div className="ls-content-glass">
+              <h2 className="section-title">Projetos em Destaque</h2>
+              <p className="ls-description">
+                Soluções técnicas que unem design moderno, performance e usabilidade.
+              </p>
+
+              {/* Desktop: Grid de projetos */}
+              {!isMobile ? (
+                <div className="ls-projects-grid">
+                  {projects.map((project) => (
+                    <div key={project.id} className="ls-project-item">
+                      <div className="project-image-wrapper">
+                        {/* Texto com efeito sobre a imagem */}
+                        <div className="image-overlay-text">
+                          <h3 className="overlay-title">{project.title}</h3>
+                          <span className="overlay-subtitle">{project.subtitle}</span>
+                        </div>
+
+                        <TiltedCard
+                          imageSrc={project.image}
+                          altText={project.title}
+                          containerHeight="240px"
+                          containerWidth="100%"
+                          imageHeight="240px"
+                          imageWidth="100%"
+                          rotateAmplitude={12}
+                          scaleOnHover={1.05}
+                          showMobileWarning={false}
+                          showTooltip={false}
+                          displayOverlayContent={true}
+                          overlayContent={
+                            <div className="image-overlay-text">
+                              <h3 className="overlay-title">{project.title}</h3>
+                              <span className="overlay-subtitle">{project.subtitle}</span>
+                            </div>
+                          }
+                        />
+                      </div>
+
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                /* Mobile: Carrossel de projetos */
+                <div className="ls-projects-carousel">
+                  <div className="carousel-container">
+                    <div 
+                      className="carousel-track"
+                      onTouchStart={handleTouchStart}
+                      onTouchEnd={handleTouchEnd}
+                    >
+                      {projects.map((project, index) => (
+                        <div
+                          key={project.id}
+                          className={`carousel-slide ${index === currentProjectIndex ? 'active' : ''}`}
+                          style={{ transform: `translateX(-${currentProjectIndex * 100}%)` }}
+                        >
+                          <div className="project-image-wrapper">
+                            {/* Texto com efeito sobre a imagem */}
+                            <div className="image-overlay-text">
+                              <h3 className="overlay-title">{project.title}</h3>
+                              <span className="overlay-subtitle">{project.subtitle}</span>
+                            </div>
+
+                            <TiltedCard
+                              imageSrc={project.image}
+                              altText={project.title}
+                              containerHeight="260px"
+                              containerWidth="100%"
+                              imageHeight="260px"
+                              imageWidth="100%"
+                              rotateAmplitude={10}
+                              scaleOnHover={1.03}
+                              showMobileWarning={false}
+                              showTooltip={false}
+                              displayOverlayContent={true}
+                              overlayContent={
+                                <div className="image-overlay-text">
+                                  <h3 className="overlay-title">{project.title}</h3>
+                                  <span className="overlay-subtitle">{project.subtitle}</span>
+                                </div>
+                              }
+                            />
+                          </div>
+
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* Controles do carrossel */}
+                    <button className="carousel-btn prev" onClick={prevProject}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M15 18l-6-6 6-6" />
+                      </svg>
+                    </button>
+
+                    <button className="carousel-btn next" onClick={nextProject}>
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                        <path d="M9 18l6-6-6-6" />
+                      </svg>
+                    </button>
+
+                    {/* Indicadores */}
+                    <div className="carousel-indicators">
+                      {projects.map((_, index) => (
+                        <button
+                          key={index}
+                          className={`indicator ${index === currentProjectIndex ? 'active' : ''}`}
+                          onClick={() => goToProject(index)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* APENAS UM BOTÃO "VER MAIS" QUE DIRECIONA PARA CONTATOS */}
+              <div className="ls-projects-actions">
+                <button
+                  className="ls-btn-primary"
+                  onClick={() => {
+                    const contactSection = document.getElementById('contact');
+                    if (contactSection) {
+                      contactSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                  }}
+                >
+                  Ver Mais
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* SEÇÃO EXPERIÊNCIA PROFISSIONAL */}
         <section id="exp" className="ls-section">
-          <div className="ls-content-glass">
+          <div className="ls-experience-container">
             <h2 className="section-title">Trajetória Profissional</h2>
             <div className="ls-timeline">
               <div className="timeline-item" data-year="03">
@@ -201,10 +430,20 @@ const Portfolio = () => {
           </div>
         </section>
 
-        {/* SEÇÃO TECNOLOGIAS - NOVA SEÇÃO ADICIONADA */}
+        {/* SEÇÃO TECNOLOGIAS */}
         <section id="skills" className="ls-section">
           <div className="ls-tech-container">
-            <h2 className="ls-tech-title">Tecnologias & Ferramentas</h2>
+            <h2 className="ls-tech-title">
+              <ShinyText
+                text="Tecnologias & Ferramentas"
+                speed={2.5}
+                delay={0}
+                color="#d0d0d0"
+                shineColor="#ffffff"
+                spread={100}
+                direction="left"
+              />
+            </h2>
             <p className="ls-tech-subtitle">
               Stack técnica utilizada no desenvolvimento de soluções robustas e escaláveis.
             </p>
@@ -243,26 +482,26 @@ const Portfolio = () => {
                 Vamos conversar sobre como posso contribuir com sua equipe.
               </p>
               <div className="ls-btn-group">
-                <button 
-                  className="ls-btn-primary" 
+                <button
+                  className="ls-btn-primary"
                   onClick={handleEmailClick}
                 >
                   Enviar Email
                 </button>
-                <button 
-                  className="ls-btn-glass" 
+                <button
+                  className="ls-btn-glass"
                   onClick={handleLinkedInClick}
                 >
                   LinkedIn
                 </button>
-                <button 
-                  className="ls-btn-glass" 
+                <button
+                  className="ls-btn-glass"
                   onClick={handleGitHubClick}
                 >
                   GitHub
                 </button>
-                <button 
-                  className="whatsapp-btn" 
+                <button
+                  className="whatsapp-btn"
                   onClick={handleWhatsAppClick}
                 >
                   <span className="whatsapp-icon">💬</span>
