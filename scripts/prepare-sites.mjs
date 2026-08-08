@@ -3,7 +3,8 @@ import { cpSync, mkdirSync } from 'node:fs';
 mkdirSync('dist/client', { recursive: true });
 cpSync('dist/index.html', 'dist/client/index.html');
 cpSync('dist/assets', 'dist/client/assets', { recursive: true });
-cpSync('dist/og.png', 'dist/client/og.png');
+cpSync('dist/og-v2.png', 'dist/client/og-v2.png');
+cpSync('dist/abstract-flow.mp4', 'dist/client/abstract-flow.mp4');
 
 mkdirSync('dist/server', { recursive: true });
 cpSync('sites/worker.js', 'dist/server/index.js');

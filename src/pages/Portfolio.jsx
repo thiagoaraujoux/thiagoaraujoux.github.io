@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
-import Galaxy from '../components/Galaxy/Galaxy';
 import './Portfolio.css';
 
 const WHATSAPP_URL = 'https://wa.me/5563999603333?text=Ol%C3%A1%2C%20Thiago!%20Quero%20um%20or%C3%A7amento%20para%20automatizar%20meu%20CRM.';
@@ -135,15 +134,25 @@ export default function Portfolio() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   return (
     <main className="site-shell">
-      <div className="space-backdrop" aria-hidden="true">{!reduceMotion && <Galaxy density={1.15} starSpeed={0.28} hueShift={262} speed={0.45} glowIntensity={0.6} saturation={0.75} rotationSpeed={0.025} />}<div className="space-glow glow-one" /><div className="space-glow glow-two" /><div className="space-noise" /></div>
       <header className="site-header">
-        <a href="#inicio" className="brand" aria-label="Início"><span className="brand-orbit"><i /></span><strong>THIAGO</strong><small>AUTOMAÇÕES</small></a>
-        <nav className={menuOpen ? 'open' : ''} aria-label="Navegação principal"><a href="#solucoes" onClick={() => setMenuOpen(false)}>Soluções</a><a href="#resultados" onClick={() => setMenuOpen(false)}>Resultados</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="nav-cta">Falar no WhatsApp ↗</a></nav>
+        <a href="#inicio" className="brand" aria-label="Início"><strong>THIAGO ARAÚJO</strong><i /></a>
+        <nav className={menuOpen ? 'open' : ''} aria-label="Navegação principal"><a href="#solucoes" onClick={() => setMenuOpen(false)}>Soluções</a><a href="#resultados" onClick={() => setMenuOpen(false)}>Indicadores</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="nav-cta">Falar no WhatsApp ↗</a></nav>
         <button className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu" aria-expanded={menuOpen}><i /><i /></button>
       </header>
       <section className="hero" id="inicio">
+        <div className="hero-video" aria-hidden="true">
+          <video autoPlay={!reduceMotion} muted loop playsInline preload="metadata">
+            <source src="/abstract-flow.mp4" type="video/mp4" />
+          </video>
+          <div className="hero-video-overlay" />
+        </div>
         <div className="hero-copy">
           <motion.div className="availability" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}><i /> AUTOMAÇÕES CRM + INTELIGÊNCIA ARTIFICIAL</motion.div>
           <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>Seu atendimento no automático.<br /><em>Suas vendas em movimento.</em></motion.h1>
@@ -166,7 +175,7 @@ export default function Portfolio() {
         <div className="process-flow">{flowSteps.map(([number,title,text],index)=><motion.div key={title} className="process-step" initial={{opacity:0,x:24}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:index*.1}}><span>{number}</span><i /><div><strong>{title}</strong><p>{text}</p></div></motion.div>)}</div>
       </section>
       <section className="final-cta"><div className="cta-planet" aria-hidden="true"><i /><i /><span>✦</span></div><div className="final-cta-content reveal-block"><span className="section-kicker">PRONTO PARA SAIR DO MANUAL?</span><h2>Vamos colocar sua<br /><em>operação em órbita.</em></h2><p>Me conte como seu atendimento funciona hoje. Eu te mostro o que pode ser automatizado e preparo um orçamento sob medida.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button-primary button-large"><span>Solicitar orçamento no WhatsApp</span><b>↗</b></a><small>Resposta direta • Sem compromisso • Projeto personalizado</small></div></section>
-      <footer><a href="#inicio" className="brand"><span className="brand-orbit"><i /></span><strong>THIAGO</strong><small>AUTOMAÇÕES</small></a><p>Automação CRM, atendimento e IA para empresas que querem crescer com eficiência.</p><div><a href="mailto:thiagoaraujo.tec@gmail.com">E-mail</a><a href="https://linkedin.com/in/thiagoaraujotec" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/thiagoaraujoux" target="_blank" rel="noreferrer">GitHub</a></div><small>© 2026 Thiago Araújo. Todos os direitos reservados.</small></footer>
+      <footer><a href="#inicio" className="brand"><strong>THIAGO ARAÚJO</strong><i /></a><p>Automação CRM, atendimento e IA para empresas que querem crescer com eficiência.</p><div><a href="mailto:thiagoaraujo.tec@gmail.com">E-mail</a><a href="https://linkedin.com/in/thiagoaraujotec" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/thiagoaraujoux" target="_blank" rel="noreferrer">GitHub</a></div><small>© 2026 Thiago Araújo. Todos os direitos reservados.</small></footer>
       <a className="whatsapp-float" href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="Solicitar orçamento pelo WhatsApp"><span>✆</span><b>Orçamento</b></a>
     </main>
   );
