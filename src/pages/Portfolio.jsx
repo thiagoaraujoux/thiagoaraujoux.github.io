@@ -1,515 +1,173 @@
-import React, { useState, useRef, useEffect } from 'react';
-import CardSwap, { Card } from '../components/CardSwap/CardSwap';
-import Aurora from '../components/Aurora/Aurora';
-import TiltedCard from '../components/TiltedCard/TiltedCard';
-import ShinyText from '../components/ShinyText/ShinyText';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import Galaxy from '../components/Galaxy/Galaxy';
 import './Portfolio.css';
 
-const Portfolio = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 968);
-  const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [gestureStartX, setGestureStartX] = useState(null);
+const WHATSAPP_URL = 'https://wa.me/5563999603333?text=Ol%C3%A1%2C%20Thiago!%20Quero%20um%20or%C3%A7amento%20para%20automatizar%20meu%20CRM.';
 
-  const closeMenu = () => setIsMenuOpen(false);
+const solutions = [
+  { number: '01', title: 'Atendimento que não dorme', text: 'Respostas instantâneas no WhatsApp com texto, áudio e linguagem natural — sem deixar o lead esperando.', tag: 'WhatsApp + IA' },
+  { number: '02', title: 'CRM sempre atualizado', text: 'Cada conversa vira histórico, tarefa e oportunidade. Seu time trabalha com contexto, não com planilhas soltas.', tag: 'Integração total' },
+  { number: '03', title: 'Follow-up no tempo certo', text: 'A automação identifica o momento da compra, recupera contatos e encaminha oportunidades quentes ao vendedor.', tag: 'Mais conversão' },
+];
 
-  // Fechar menu ao clicar fora
+const flowSteps = [
+  ['01', 'Mensagem recebida', 'O lead chega pelo WhatsApp, site ou campanha.'],
+  ['02', 'IA entende e responde', 'Texto e áudio personalizados em poucos segundos.'],
+  ['03', 'CRM organiza tudo', 'Contato, etapa, histórico e próxima ação são registrados.'],
+  ['04', 'Seu time vende', 'O vendedor recebe a oportunidade pronta para avançar.'],
+];
+
+function CountUp({ value, suffix = '', decimals = 0 }) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: '-15%' });
+  const [current, setCurrent] = useState(0);
+
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (isMenuOpen && !event.target.closest('.ls-mobile-menu') && !event.target.closest('.ls-hamburguer')) {
-        setIsMenuOpen(false);
-      }
+    if (!isInView) return;
+    const duration = 1450;
+    const startedAt = performance.now();
+    let frame;
+    const tick = (now) => {
+      const progress = Math.min((now - startedAt) / duration, 1);
+      setCurrent(value * (1 - Math.pow(1 - progress, 4)));
+      if (progress < 1) frame = requestAnimationFrame(tick);
     };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [isInView, value]);
 
-    document.addEventListener('click', handleClickOutside);
-    return () => document.removeEventListener('click', handleClickOutside);
-  }, [isMenuOpen]);
+  return <span ref={ref}>{current.toLocaleString('pt-BR', { minimumFractionDigits: decimals, maximumFractionDigits: decimals })}{suffix}</span>;
+}
 
-  // Acompanhar tamanho da janela para responsividade
-  useEffect(() => {
-    const handleResize = () => {
-      setWindowWidth(window.innerWidth);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  // Evitar scroll do body quando menu está aberto
-  useEffect(() => {
-    if (isMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-
-    return () => {
-      document.body.style.overflow = 'unset';
-    };
-  }, [isMenuOpen]);
-
-  // Handlers para os botões
-  const handleEmailClick = () => {
-    window.location.href = 'mailto:thiagoaraujo.tec@gmail.com';
-  };
-
-  const handleLinkedInClick = () => {
-    window.open('https://linkedin.com/in/thiagoaraujotec', '_blank');
-  };
-
-  const handleGitHubClick = () => {
-    window.open('https://github.com/thiagoaraujoux', '_blank');
-  };
-
-  const handleWhatsAppClick = () => {
-    window.open('https://wa.me/5563999603333', '_blank');
-  };
-
-  const handleProjectsClick = () => {
-    const projectsSection = document.getElementById('projects');
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleDownloadCV = () => {
-    window.open('/cv-thiago-araujo.pdf', '_blank');
-  };
-
-  // Dados dos projetos
-  const projects = [
-    {
-      id: 1,
-      title: "Sistema de Infraestrutura",
-      subtitle: "DevOps & Cloud",
-      image: "https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      description: "Arquitetura de containerização e orquestração com Docker e VMware.",
-      technologies: ["Docker", "VMware", "Linux", "GitHub Actions"],
-      link: "#"
-    },
-    {
-      id: 2,
-      title: "Portfolio Moderno",
-      subtitle: "UI/UX & Frontend",
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      description: "Interface interativa com efeitos 3D, partículas e animações fluidas.",
-      technologies: ["React", "Motion", "CSS 3D", "Framer Motion"],
-      link: "https://github.com/thiagoaraujoux"
-    },
-    {
-      id: 3,
-      title: "Dashboard SEDUC-TO",
-      subtitle: "BI & Data Visualization",
-      image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      description: "Painel de controle em tempo real para monitoramento educacional com Power BI e APIs.",
-      technologies: ["Power BI", "React", "Node.js", "SQL Server"],
-      link: "#"
-    },
-    {
-      id: 4,
-      title: "Automações & Chatbot",
-      subtitle: "RPA & IA Conversacional",
-      image: "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-      description: "Sistema de automação de processos com chatbot integrado para atendimento inteligente.",
-      technologies: ["Python", "RPA", "OpenAI API", "Flask", "WhatsApp API"],
-      link: "#"
-    }
+function ChatDemo() {
+  const reduceMotion = useReducedMotion();
+  const messages = [
+    { type: 'client', delay: 0.3, content: 'Oi! Vi o anúncio e queria saber os planos.' },
+    { type: 'bot', delay: 1.25, content: 'Olá, Marina! 👋 Claro. Posso entender o tamanho da sua equipe primeiro?' },
+    { type: 'audio', delay: 2.2 },
+    { type: 'status', delay: 3.05 },
   ];
 
-  // Touch handlers para swipe no carrossel mobile
-  const handleGestureStart = (x) => {
-    setGestureStartX(x);
-  };
+  return (
+    <motion.div className="chat-shell" initial={{ opacity: 0, y: 24, rotateX: 8 }} animate={{ opacity: 1, y: 0, rotateX: 0 }} transition={{ duration: 0.8, delay: 0.25 }}>
+      <div className="chat-topbar">
+        <div className="bot-avatar">T</div>
+        <div><strong>Assistente Thiago</strong><span><i /> online • responde agora</span></div>
+        <div className="chat-dots">•••</div>
+      </div>
+      <div className="chat-body">
+        <div className="chat-date">HOJE, 09:41</div>
+        {messages.map((message, index) => (
+          <motion.div key={index} className={`chat-item ${message.type}`} initial={reduceMotion ? false : { opacity: 0, y: 12, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} transition={{ delay: reduceMotion ? 0 : message.delay, duration: 0.42 }}>
+            {message.type === 'audio' ? (
+              <><button className="audio-play" aria-label="Reproduzir áudio demonstrativo">▶</button><div className="waveform" aria-hidden="true">{[9, 14, 20, 12, 25, 18, 11, 23, 16, 9, 19, 13, 7].map((height, i) => <i key={i} style={{ height }} />)}</div><span>0:18</span></>
+            ) : message.type === 'status' ? (
+              <><span className="status-icon">✓</span><div><strong>Novo lead qualificado</strong><span>Negócio criado no CRM</span></div></>
+            ) : <>{message.content}<small>{message.type === 'bot' ? '09:42  ✓✓' : '09:41'}</small></>}
+          </motion.div>
+        ))}
+        <motion.div className="typing" initial={{ opacity: 0 }} animate={{ opacity: [0, 1, 1, 0] }} transition={{ delay: 0.75, duration: 1.25 }}><i /><i /><i /></motion.div>
+      </div>
+      <div className="chat-input"><span>Digite uma mensagem</span><button aria-label="Enviar mensagem">➤</button></div>
+      <div className="automation-pill"><span>✦</span> automação em execução</div>
+    </motion.div>
+  );
+}
 
-  const handleGestureEnd = (x) => {
-    if (gestureStartX === null) return;
-    handleSwipe(gestureStartX, x);
-    setGestureStartX(null);
-  };
-
-  const handleTouchStart = (e) => handleGestureStart(e.targetTouches[0].clientX);
-  const handleTouchEnd = (e) => handleGestureEnd(e.changedTouches[0].clientX);
-  const handleMouseDown = (e) => handleGestureStart(e.clientX);
-  const handleMouseUp = (e) => handleGestureEnd(e.clientX);
-  const handleMouseLeave = () => setGestureStartX(null);
-
-  const handleSwipe = (startX, endX) => {
-    const distance = startX - endX;
-    const threshold = 40; // Reduzido para ser mais responsivo
-
-    if (Math.abs(distance) > threshold) {
-      if (distance > 0) {
-        // Swipe para esquerda - próximo projeto
-        nextProject();
-      } else {
-        // Swipe para direita - projeto anterior
-        prevProject();
-      }
-    }
-  };
-
-  // Navegação do carrossel
-  const nextProject = () => {
-    setCurrentProjectIndex((prevIndex) =>
-      prevIndex === projects.length - 1 ? 0 : prevIndex + 1
-    );
-  };
-
-  const prevProject = () => {
-    setCurrentProjectIndex((prevIndex) =>
-      prevIndex === 0 ? projects.length - 1 : prevIndex - 1
-    );
-  };
-
-  const goToProject = (index) => {
-    setCurrentProjectIndex(index);
-  };
-
-  // Determinar se é mobile baseado na largura
-  const isMobile = windowWidth <= 768;
+function OrbitSection() {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const orbitRotate = useTransform(scrollYProgress, [0, 1], [-45, 260]);
+  const counterRotate = useTransform(orbitRotate, value => -value * 0.7);
+  const planetY = useTransform(scrollYProgress, [0, 0.5, 1], [80, 0, -80]);
 
   return (
-    <div className="ls-wrapper">
-
-      <div className="ls-background-fixed">
-        <Aurora
-          particleCount={550}
-          particleSpread={20}
-          speed={0.3}
-          particleBaseSize={140}
-          sizeRandomness={3.5}
-          moveParticlesOnHover={true}
-          particleHoverFactor={0.8}
-          alphaParticles={true}
-          disableRotation={false}
-          pixelRatio={1.5}
-          intensity={1.8}
-          className="purple-particles-fullscreen"
-        />
-        <div className="content-overlay" />
+    <section className="orbit-section" ref={sectionRef}>
+      <div className="orbit-copy reveal-block">
+        <span className="section-kicker">UMA OPERAÇÃO CONECTADA</span>
+        <h2>Do primeiro “oi” até a venda, <em>tudo gira junto.</em></h2>
+        <p>Conecto as ferramentas que sua empresa já usa e desenho um fluxo que trabalha de ponta a ponta.</p>
       </div>
-
-      {/* NAVBAR */}
-      <nav className="ls-navbar">
-        <div className="ls-nav-content">
-          <div className="ls-logo">THIAGO ARAÚJO</div>
-          <button
-            className={`ls-hamburguer ${isMenuOpen ? 'open' : ''}`}
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Menu"
-            aria-expanded={isMenuOpen}
-          >
-            <div className="bar"></div>
-            <div className="bar"></div>
-            <div className="bar"></div>
-          </button>
-        </div>
-      </nav>
-
-      {/* MENU MOBILE */}
-      <div className={`ls-mobile-menu ${isMenuOpen ? 'active' : ''}`}>
-        <div className="ls-menu-links">
-          <a href="#home" onClick={closeMenu}>INÍCIO</a>
-          <a href="#projects" onClick={closeMenu}>PROJETOS</a>
-          <a href="#exp" onClick={closeMenu}>EXPERIÊNCIA</a>
-          <a href="#skills" onClick={closeMenu}>TECNOLOGIAS</a>
-          <a href="#contact" onClick={closeMenu}>CONTATO</a>
-        </div>
-      </div>
-
-      {/* MAIN CONTENT */}
-      <div className="ls-main-scroll">
-        {/* Seção Hero */}
-        <section id="home" className="ls-section">
-          <div className="ls-hero-container">
-            <div className="ls-hero-text">
-              <div className="ls-badge">ANALISTA DE INFRAESTRUTURA & DEV</div>
-              <h1 className="ls-title">Sistemas Fluidos,<br />Infraestrutura Robusta.</h1>
-              <p className="ls-description">
-                Bacharel em Sistemas de Informação pela <b>UNITINS</b>.
-                Especialista em unir hardware, software e inteligência de dados com foco em UX/UI.
-              </p>
-              <div className="ls-btn-group">
-                <button
-                  className="ls-btn-primary"
-                  onClick={handleProjectsClick}
-                >
-                  Ver Projetos
-                </button>
-                <button
-                  className="ls-btn-glass"
-                  onClick={handleDownloadCV}
-                >
-                  Download CV
-                </button>
-              </div>
-            </div>
-            {/* DIV DE ESPAÇAMENTO VISÍVEL APENAS EM MOBILE */}
-            <div className="button-cards-spacer"></div>
-
-            <div className="ls-hero-cards">
-              <CardSwap cardDistance={windowWidth < 400 ? 5 : (windowWidth < 768 ? 8 : 15)}>
-                <Card>
-                  <div className="ls-card-glass">
-                    <h3 className="card-title">Fullstack Dev</h3>
-                    <p className="card-text">Java, React, Next.js e PHP. Dashboards em Power BI e Looker Studio.</p>
-                  </div>
-                </Card>
-                <Card>
-                  <div className="ls-card-glass">
-                    <h3 className="card-title">Infra & Redes</h3>
-                    <p className="card-text">Docker, VMware, Linux (Ubuntu/Debian) e Mikrotik.</p>
-                  </div>
-                </Card>
-              </CardSwap>
-            </div>
-          </div>
-        </section>
-
-        {/* SEÇÃO: PROJETOS DESTAQUE - ATUALIZADO */}
-        <section id="projects" className="ls-section">
-          <div className="ls-projects-container">
-            <div className="ls-content-glass">
-              <h2 className="section-title">Projetos em Destaque</h2>
-              <p className="ls-description">
-                Soluções técnicas que unem design moderno, performance e usabilidade.
-              </p>
-
-              {/* Desktop: Grid de projetos */}
-              {!isMobile ? (
-                <div className="ls-projects-grid">
-                  {projects.map((project) => (
-                    <div key={project.id} className="ls-project-item">
-                      <div className="project-image-wrapper">
-                        {/* Texto com efeito sobre a imagem */}
-                        <div className="image-overlay-text">
-                          <h3 className="overlay-title">{project.title}</h3>
-                          <span className="overlay-subtitle">{project.subtitle}</span>
-                        </div>
-
-                        <TiltedCard
-                          imageSrc={project.image}
-                          altText={project.title}
-                          containerHeight="240px"
-                          containerWidth="100%"
-                          imageHeight="240px"
-                          imageWidth="100%"
-                          rotateAmplitude={12}
-                          scaleOnHover={1.05}
-                          showMobileWarning={false}
-                          showTooltip={false}
-                          displayOverlayContent={true}
-                          overlayContent={
-                            <div className="image-overlay-text">
-                              <h3 className="overlay-title">{project.title}</h3>
-                              <span className="overlay-subtitle">{project.subtitle}</span>
-                            </div>
-                          }
-                        />
-                      </div>
-
-                    </div>
-                  ))}
-                </div>
-              ) : (
-                /* Mobile: Carrossel de projetos */
-                <div className="ls-projects-carousel">
-                  <div className="carousel-container">
-                    <div 
-                      className="carousel-track"
-                      onTouchStart={handleTouchStart}
-                      onTouchEnd={handleTouchEnd}
-                      onMouseDown={handleMouseDown}
-                      onMouseUp={handleMouseUp}
-                      onMouseLeave={handleMouseLeave}
-                    >
-                      {projects.map((project, index) => (
-                        <div
-                          key={project.id}
-                          className={`carousel-slide ${index === currentProjectIndex ? 'active' : ''}`}
-                          style={{ transform: `translateX(-${currentProjectIndex * 100}%)` }}
-                        >
-                          <div className="project-image-wrapper">
-                            {/* Texto com efeito sobre a imagem */}
-                            <div className="image-overlay-text">
-                              <h3 className="overlay-title">{project.title}</h3>
-                              <span className="overlay-subtitle">{project.subtitle}</span>
-                            </div>
-
-                            <TiltedCard
-                              imageSrc={project.image}
-                              altText={project.title}
-                              containerHeight="260px"
-                              containerWidth="100%"
-                              imageHeight="260px"
-                              imageWidth="100%"
-                              rotateAmplitude={10}
-                              scaleOnHover={1.03}
-                              showMobileWarning={false}
-                              showTooltip={false}
-                              displayOverlayContent={true}
-                              overlayContent={
-                                <div className="image-overlay-text">
-                                  <h3 className="overlay-title">{project.title}</h3>
-                                  <span className="overlay-subtitle">{project.subtitle}</span>
-                                </div>
-                              }
-                            />
-                          </div>
-
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Indicadores */}
-                    <div className="carousel-indicators">
-                      {projects.map((_, index) => (
-                        <button
-                          key={index}
-                          className={`indicator ${index === currentProjectIndex ? 'active' : ''}`}
-                          onClick={() => goToProject(index)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              {/* APENAS UM BOTÃO "VER MAIS" QUE DIRECIONA PARA CONTATOS */}
-              <div className="ls-projects-actions">
-                <button
-                  className="ls-btn-primary"
-                  onClick={() => {
-                    const contactSection = document.getElementById('contact');
-                    if (contactSection) {
-                      contactSection.scrollIntoView({ behavior: 'smooth' });
-                    }
-                  }}
-                >
-                  Ver Mais
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SEÇÃO EXPERIÊNCIA PROFISSIONAL */}
-        <section id="exp" className="ls-section">
-          <div className="ls-experience-container">
-            <h2 className="section-title">Trajetória Profissional</h2>
-            <div className="ls-timeline">
-              <div className="timeline-item" data-year="03">
-                <div className="timeline-marker">
-                  <span className="timeline-number">03</span>
-                </div>
-                <span className="date">2023 - 2026</span>
-                <h4>SEDUC-TO</h4>
-                <p>Analista de Sistemas e BI. Desenvolvimento de apps e painéis de dados estratégicos para a Secretaria da Educação.</p>
-              </div>
-              <div className="timeline-item" data-year="02">
-                <div className="timeline-marker">
-                  <span className="timeline-number">02</span>
-                </div>
-                <span className="date">2022 - 2023</span>
-                <h4>PGE-TO</h4>
-                <p>Suporte de Infraestrutura, implantação de Docker e gestão de ativos via GLPI na Procuradoria Geral.</p>
-              </div>
-              <div className="timeline-item" data-year="01">
-                <div className="timeline-marker">
-                  <span className="timeline-number">01</span>
-                </div>
-                <span className="date">2020 - 2022</span>
-                <h4>TCE-TO</h4>
-                <p>Suporte técnico e elaboração de fluxos de processos com Bizagi no Tribunal de Contas.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SEÇÃO TECNOLOGIAS */}
-        <section id="skills" className="ls-section">
-          <div className="ls-tech-container">
-            <h2 className="ls-tech-title">
-              <ShinyText
-                text="Tecnologias & Ferramentas"
-                speed={2.5}
-                delay={0}
-                color="#d0d0d0"
-                shineColor="#ffffff"
-                spread={100}
-                direction="left"
-              />
-            </h2>
-            <p className="ls-tech-subtitle">
-              Stack técnica utilizada no desenvolvimento de soluções robustas e escaláveis.
-            </p>
-            <div className="ls-tech-grid">
-              <div className="tech-card">
-                <div className="tech-icon">⚡</div>
-                <h4>Frontend</h4>
-                <p>React, Next.js, TypeScript, Tailwind CSS</p>
-              </div>
-              <div className="tech-card">
-                <div className="tech-icon">🔧</div>
-                <h4>Backend</h4>
-                <p>Node.js, Java, PHP, Python, APIs REST</p>
-              </div>
-              <div className="tech-card">
-                <div className="tech-icon">📊</div>
-                <h4>Data & BI</h4>
-                <p>Power BI, Looker Studio, SQL, ETL</p>
-              </div>
-              <div className="tech-card">
-                <div className="tech-icon">🛠️</div>
-                <h4>DevOps & Infra</h4>
-                <p>Docker, Linux, VMware, Git, CI/CD</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* SEÇÃO CONTATO */}
-        <section id="contact" className="ls-section">
-          <div className="ls-content-glass">
-            <h2 className="section-title">Contato</h2>
-            <div className="contact-content">
-              <p className="card-text">
-                Disponível para oportunidades e projetos desafiadores.
-                Vamos conversar sobre como posso contribuir com sua equipe.
-              </p>
-              <div className="ls-btn-group">
-                <button
-                  className="ls-btn-primary"
-                  onClick={handleEmailClick}
-                >
-                  Enviar Email
-                </button>
-                <button
-                  className="ls-btn-glass"
-                  onClick={handleLinkedInClick}
-                >
-                  LinkedIn
-                </button>
-                <button
-                  className="ls-btn-glass"
-                  onClick={handleGitHubClick}
-                >
-                  GitHub
-                </button>
-                <button
-                  className="whatsapp-btn"
-                  onClick={handleWhatsAppClick}
-                >
-                  <span className="whatsapp-icon">💬</span>
-                  WhatsApp
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
+      <motion.div className="solar-system" style={{ y: planetY }} aria-hidden="true">
+        <div className="sun-core"><span>CRM</span></div>
+        <motion.div className="orbit-track orbit-one" style={{ rotate: orbitRotate }}><div className="planet planet-whatsapp"><span>WhatsApp</span></div><div className="planet planet-ia"><span>IA</span></div></motion.div>
+        <motion.div className="orbit-track orbit-two" style={{ rotate: counterRotate }}><div className="planet planet-lead"><span>Leads</span></div><div className="planet planet-sales"><span>Vendas</span></div></motion.div>
+      </motion.div>
+      <div className="orbit-features">{['Captura automática', 'Qualificação com IA', 'Histórico centralizado', 'Follow-up inteligente'].map((item, index) => <div key={item}><span>0{index + 1}</span>{item}</div>)}</div>
+    </section>
   );
-};
+}
 
-export default Portfolio;
+function DashboardSection() {
+  return (
+    <section className="dashboard-section" id="resultados">
+      <div className="section-heading reveal-block"><span className="section-kicker">RESULTADO VISÍVEL</span><h2>Menos tarefas repetidas.<br /><em>Mais controle para crescer.</em></h2></div>
+      <div className="metric-strip">
+        <div><strong><CountUp value={3.2} decimals={1} suffix="x" /></strong><span>mais velocidade<br />no atendimento</span></div>
+        <div><strong><CountUp value={38} suffix="%" /></strong><span>mais leads<br />respondidos</span></div>
+        <div><strong><CountUp value={12} suffix="h" /></strong><span>economizadas<br />por semana</span></div>
+      </div>
+      <motion.div className="dashboard-card" initial={{ opacity: 0, y: 48, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: '-10%' }} transition={{ duration: 0.7 }}>
+        <div className="dashboard-sidebar"><div className="mini-brand">TA</div><i className="active" /><i /><i /><i /></div>
+        <div className="dashboard-main">
+          <div className="dashboard-head"><div><span>VISÃO GERAL</span><strong>Performance comercial</strong></div><button>Últimos 30 dias⌄</button></div>
+          <div className="dashboard-kpis"><div><span>Novos leads</span><strong>248</strong><small>↑ 24%</small></div><div><span>Conversão</span><strong>31,8%</strong><small>↑ 8,2%</small></div><div><span>Tempo médio</span><strong>42s</strong><small>↓ 67%</small></div></div>
+          <div className="dashboard-grid">
+            <div className="chart-card"><div className="chart-title"><strong>Conversas qualificadas</strong><span>● automação</span></div><div className="chart-area"><div className="chart-lines"><i /><i /><i /><i /></div><div className="bars">{[38,52,43,68,58,82,72,91,77,96].map((height,i)=><b key={i} style={{height:`${height}%`}} />)}</div></div></div>
+            <div className="donut-card"><strong>Canais</strong><div className="donut"><span>72%<small>WhatsApp</small></span></div><div className="legend"><span><i className="purple" /> WhatsApp</span><span><i className="blue" /> Site</span></div></div>
+          </div>
+        </div>
+      </motion.div>
+      <p className="metrics-note">* Números ilustrativos. Os resultados variam conforme operação, volume e estratégia.</p>
+    </section>
+  );
+}
+
+export default function Portfolio() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const reduceMotion = useReducedMotion();
+
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('.reveal-block');
+    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) entry.target.classList.add('is-visible'); }), { threshold: 0.15 });
+    revealElements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <main className="site-shell">
+      <div className="space-backdrop" aria-hidden="true">{!reduceMotion && <Galaxy density={1.15} starSpeed={0.28} hueShift={262} speed={0.45} glowIntensity={0.6} saturation={0.75} rotationSpeed={0.025} />}<div className="space-glow glow-one" /><div className="space-glow glow-two" /><div className="space-noise" /></div>
+      <header className="site-header">
+        <a href="#inicio" className="brand" aria-label="Início"><span className="brand-orbit"><i /></span><strong>THIAGO</strong><small>AUTOMAÇÕES</small></a>
+        <nav className={menuOpen ? 'open' : ''} aria-label="Navegação principal"><a href="#solucoes" onClick={() => setMenuOpen(false)}>Soluções</a><a href="#resultados" onClick={() => setMenuOpen(false)}>Resultados</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="nav-cta">Falar no WhatsApp ↗</a></nav>
+        <button className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu" aria-expanded={menuOpen}><i /><i /></button>
+      </header>
+      <section className="hero" id="inicio">
+        <div className="hero-copy">
+          <motion.div className="availability" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}><i /> AUTOMAÇÕES CRM + INTELIGÊNCIA ARTIFICIAL</motion.div>
+          <motion.h1 initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.7 }}>Seu atendimento no automático.<br /><em>Suas vendas em movimento.</em></motion.h1>
+          <motion.p initial={{ opacity: 0, y: 18 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.65 }}>Transformo conversas em oportunidades com automações que atendem, qualificam e organizam seus leads — 24 horas por dia.</motion.p>
+          <motion.div className="hero-actions" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.35 }}><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button-primary"><span>Solicitar orçamento</span><b>↗</b></a><a href="#como-funciona" className="button-link">Ver como funciona <span>↓</span></a></motion.div>
+          <motion.div className="trust-line" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}><div className="avatar-stack"><i>T</i><i>IA</i><i>+</i></div><span>Projeto sob medida<br /><strong>para a sua operação</strong></span></motion.div>
+        </div>
+        <div className="hero-demo"><div className="planet-halo" aria-hidden="true"><i /><i /><i /></div><ChatDemo /></div>
+        <div className="scroll-cue"><span>ROLE PARA EXPLORAR</span><i /></div>
+      </section>
+      <section className="context-strip" id="como-funciona"><p>Enquanto você lê isso, alguém pode estar esperando uma resposta da sua empresa.</p><div><span>RESPOSTA</span><i>→</i><span>RELACIONAMENTO</span><i>→</i><strong>RECEITA</strong></div></section>
+      <OrbitSection />
+      <section className="solutions-section" id="solucoes">
+        <div className="section-heading reveal-block"><span className="section-kicker">O QUE EU AUTOMATIZO</span><h2>Menos operação manual.<br /><em>Mais espaço para vender.</em></h2></div>
+        <div className="solution-list">{solutions.map((solution,index)=><motion.article key={solution.title} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-10%'}} transition={{delay:index*.08}}><span className="solution-number">{solution.number}</span><div className="solution-icon"><i /><b>{index===0?'↗':index===1?'⌁':'◎'}</b></div><div><h3>{solution.title}</h3><p>{solution.text}</p><small>{solution.tag}</small></div></motion.article>)}</div>
+      </section>
+      <DashboardSection />
+      <section className="process-section" id="processo">
+        <div className="process-intro reveal-block"><span className="section-kicker">COMO FUNCIONA</span><h2>Uma jornada simples.<br /><em>Uma operação inteligente.</em></h2><p>Eu mapeio a sua rotina, desenho a automação e deixo tudo funcionando com clareza para o seu time.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer">Quero desenhar meu fluxo ↗</a></div>
+        <div className="process-flow">{flowSteps.map(([number,title,text],index)=><motion.div key={title} className="process-step" initial={{opacity:0,x:24}} whileInView={{opacity:1,x:0}} viewport={{once:true}} transition={{delay:index*.1}}><span>{number}</span><i /><div><strong>{title}</strong><p>{text}</p></div></motion.div>)}</div>
+      </section>
+      <section className="final-cta"><div className="cta-planet" aria-hidden="true"><i /><i /><span>✦</span></div><div className="final-cta-content reveal-block"><span className="section-kicker">PRONTO PARA SAIR DO MANUAL?</span><h2>Vamos colocar sua<br /><em>operação em órbita.</em></h2><p>Me conte como seu atendimento funciona hoje. Eu te mostro o que pode ser automatizado e preparo um orçamento sob medida.</p><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="button-primary button-large"><span>Solicitar orçamento no WhatsApp</span><b>↗</b></a><small>Resposta direta • Sem compromisso • Projeto personalizado</small></div></section>
+      <footer><a href="#inicio" className="brand"><span className="brand-orbit"><i /></span><strong>THIAGO</strong><small>AUTOMAÇÕES</small></a><p>Automação CRM, atendimento e IA para empresas que querem crescer com eficiência.</p><div><a href="mailto:thiagoaraujo.tec@gmail.com">E-mail</a><a href="https://linkedin.com/in/thiagoaraujotec" target="_blank" rel="noreferrer">LinkedIn</a><a href="https://github.com/thiagoaraujoux" target="_blank" rel="noreferrer">GitHub</a></div><small>© 2026 Thiago Araújo. Todos os direitos reservados.</small></footer>
+      <a className="whatsapp-float" href={WHATSAPP_URL} target="_blank" rel="noreferrer" aria-label="Solicitar orçamento pelo WhatsApp"><span>✆</span><b>Orçamento</b></a>
+    </main>
+  );
+}

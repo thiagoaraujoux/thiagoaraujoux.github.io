@@ -1,12 +1,6 @@
-import Portfolio from "./pages/Portfolio"; // Caminho corrigido
-import "./App.css";
+import Portfolio from './pages/Portfolio';
+import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <Portfolio />
-    </div>
-  );
+export default function App() {
+  return <div className="App"><Portfolio /></div>;
 }
-
-export default App;
