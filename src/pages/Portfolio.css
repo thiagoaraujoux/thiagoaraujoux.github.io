@@ -118,3 +118,11 @@ footer p{font-size:.96rem}footer>div a{font-size:.92rem}footer>small{font-size:.
 .metric-strip>div{padding-top:46px;padding-bottom:46px}
 
 @media(max-width:699px){.metric-strip>div>strong>span{font-size:clamp(2.3rem,11vw,3.1rem)}.metric-strip>div>span{font-size:.92rem;line-height:1.45}.metric-strip>div{padding:30px 8px}}
+
+/* Targeted scale increase for the compact journey labels. */
+.availability{font-size:13.5px;letter-spacing:.08em}
+.context-strip div{gap:12px;font-size:13px;letter-spacing:.12em}
+.orbit-features div{gap:16px;padding:24px;font-size:1.18rem}
+.orbit-features span{font-size:13px}
+
+@media(min-width:700px){.availability{font-size:15px}.context-strip div{font-size:14px}.orbit-features div{font-size:1.28rem}.orbit-features span{font-size:14px}}
