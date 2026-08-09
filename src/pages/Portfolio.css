@@ -111,3 +111,10 @@ footer p{font-size:.96rem}footer>div a{font-size:.92rem}footer>small{font-size:.
 .process-intro>p{font-size:1.1rem}.process-intro>a{font-size:1rem}.process-step p{font-size:1rem}footer p{font-size:1.02rem}footer>div a{font-size:.98rem}footer>small{font-size:.82rem}.whatsapp-float b{font-size:.9rem}
 
 @media(min-width:700px){.availability,.section-kicker{font-size:13px}.hero-copy>p{font-size:1.2rem}.planet span{font-size:10px}.dashboard-kpis strong{font-size:1.45rem}.metric-strip span{font-size:.9rem}}
+
+/* Emphasize the result block values and captions independently. */
+.metric-strip>div>strong>span{display:block;font:600 clamp(2.7rem,5vw,4.5rem)/1 'Syne',sans-serif;color:var(--violet-light);letter-spacing:-.05em}
+.metric-strip>div>span{margin-top:13px;color:#b7b0c1;font-size:1.1rem;line-height:1.5}
+.metric-strip>div{padding-top:46px;padding-bottom:46px}
+
+@media(max-width:699px){.metric-strip>div>strong>span{font-size:clamp(2.3rem,11vw,3.1rem)}.metric-strip>div>span{font-size:.92rem;line-height:1.45}.metric-strip>div{padding:30px 8px}}
