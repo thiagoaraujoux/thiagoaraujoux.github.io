@@ -104,8 +104,8 @@ function DashboardSection() {
       <div className="section-heading reveal-block"><span className="section-kicker">RESULTADO VISÍVEL</span><h2>Menos tarefas repetidas.<br /><em>Mais controle para crescer.</em></h2></div>
       <div className="metric-strip">
         <div><strong><CountUp value={3.2} decimals={1} suffix="x" /></strong><span>mais velocidade<br />no atendimento</span></div>
-        <div><strong><CountUp value={38} suffix="%" /></strong><span>mais leads<br />respondidos</span></div>
-        <div><strong><CountUp value={12} suffix="h" /></strong><span>economizadas<br />por semana</span></div>
+        <div><strong><CountUp value={100} suffix="%" /></strong><span>leads<br />respondidos</span></div>
+        <div><strong><CountUp value={24} suffix="/7" /></strong><span>atendimento ativo<br />todos os dias</span></div>
       </div>
       <motion.div className="dashboard-card" initial={{ opacity: 0, y: 48, scale: 0.96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: '-10%' }} transition={{ duration: 0.7 }}>
         <div className="dashboard-sidebar"><div className="mini-brand">TA</div><i className="active" /><i /><i /><i /></div>
