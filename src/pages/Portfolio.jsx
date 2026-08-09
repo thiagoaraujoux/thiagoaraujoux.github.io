@@ -166,7 +166,7 @@ export default function Portfolio() {
       <section className="context-strip" id="como-funciona"><p>Enquanto você lê isso, alguém pode estar esperando uma resposta da sua empresa.</p><div><span className="journey-response">RESPOSTA</span><i>→</i><span className="journey-relationship">RELACIONAMENTO</span><i>→</i><strong className="journey-revenue">RECEITA</strong></div></section>
       <OrbitSection />
       <section className="solutions-section" id="solucoes">
-        <div className="section-heading reveal-block"><span className="section-kicker">O QUE EU AUTOMATIZO</span><h2>Menos operação manual.<br /><em>Mais espaço para vender.</em></h2></div>
+        <div className="section-heading reveal-block"><span className="section-kicker solutions-kicker">O QUE EU AUTOMATIZO</span><h2>Menos operação manual.<br /><em>Mais espaço para vender.</em></h2></div>
         <div className="solution-list">{solutions.map((solution,index)=><motion.article key={solution.title} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-10%'}} transition={{delay:index*.08}}><span className="solution-number">{solution.number}</span><div className="solution-icon"><i /><b>{index===0?'↗':index===1?'⌁':'◎'}</b></div><div><h3>{solution.title}</h3><p>{solution.text}</p><small>{solution.tag}</small></div></motion.article>)}</div>
       </section>
       <DashboardSection />
