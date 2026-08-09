@@ -97,3 +97,17 @@ footer .brand{display:inline-flex}
 footer p{font-size:.96rem}footer>div a{font-size:.92rem}footer>small{font-size:.76rem}.whatsapp-float b{font-size:.84rem}
 
 @media(min-width:700px){.availability,.section-kicker{font-size:12px}.hero-copy>p{font-size:1.13rem}.solution-list p{font-size:1.04rem}.process-step p{font-size:1rem}}
+
+/* Second readability pass: labels, orbital names and dashboard values. */
+.availability,.section-kicker{font-size:12px}
+.hero-copy>p{font-size:1.15rem}.button-link{font-size:1.05rem}.trust-line{font-size:.92rem}
+.chat-topbar strong{font-size:.94rem}.chat-topbar span{font-size:.74rem}.chat-item{font-size:.88rem}.chat-item small{font-size:.66rem}
+.chat-item.audio>span{font-size:.7rem}.chat-item.status strong{font-size:.8rem}.chat-item.status div span{font-size:.7rem}.chat-input{font-size:.78rem}.automation-pill{font-size:.7rem}
+.planet span{top:52px;padding:5px 9px;font-size:9px;letter-spacing:.03em}.sun-core span{font-size:13px}.orbit-features div{font-size:1.02rem}.orbit-features span{font-size:11px}
+.solution-number{font-size:12px}.solution-list p{font-size:1.07rem}.solution-list small{font-size:11px}
+.metric-strip strong{font-size:clamp(2rem,9vw,3.65rem)}.metric-strip span{font-size:.83rem}
+.dashboard-head strong{font-size:.92rem}.dashboard-head span{font-size:.76rem}.dashboard-kpis strong{font-size:1.16rem}.dashboard-kpis span{font-size:.68rem}.dashboard-kpis small{font-size:.64rem}
+.chart-title strong,.donut-card>strong{font-size:.8rem}.chart-title span{font-size:.64rem}.legend{font-size:.68rem}.metrics-note{font-size:.74rem}
+.process-intro>p{font-size:1.1rem}.process-intro>a{font-size:1rem}.process-step p{font-size:1rem}footer p{font-size:1.02rem}footer>div a{font-size:.98rem}footer>small{font-size:.82rem}.whatsapp-float b{font-size:.9rem}
+
+@media(min-width:700px){.availability,.section-kicker{font-size:13px}.hero-copy>p{font-size:1.2rem}.planet span{font-size:10px}.dashboard-kpis strong{font-size:1.45rem}.metric-strip span{font-size:.9rem}}
