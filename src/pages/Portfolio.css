@@ -122,7 +122,9 @@ footer p{font-size:.96rem}footer>div a{font-size:.92rem}footer>small{font-size:.
 /* Targeted scale increase for the compact journey labels. */
 .availability{font-size:13.5px;letter-spacing:.08em}
 .context-strip div{gap:12px;font-size:13px;letter-spacing:.12em}
+.context-strip .journey-response{color:#70e6c0}.context-strip .journey-relationship{color:#77bafc}.context-strip .journey-revenue{color:#d0a4ff}
+.orbit-copy .section-kicker{font-size:16px;letter-spacing:.13em}
 .orbit-features div{gap:16px;padding:24px;font-size:1.18rem}
 .orbit-features span{font-size:13px}
 
-@media(min-width:700px){.availability{font-size:15px}.context-strip div{font-size:14px}.orbit-features div{font-size:1.28rem}.orbit-features span{font-size:14px}}
+@media(min-width:700px){.availability{font-size:15px}.context-strip div{font-size:14px}.orbit-copy .section-kicker{font-size:18px}.orbit-features div{font-size:1.28rem}.orbit-features span{font-size:14px}}

@@ -163,7 +163,7 @@ export default function Portfolio() {
         <div className="hero-demo"><div className="planet-halo" aria-hidden="true"><i /><i /><i /></div><ChatDemo /></div>
         <div className="scroll-cue"><span>ROLE PARA EXPLORAR</span><i /></div>
       </section>
-      <section className="context-strip" id="como-funciona"><p>Enquanto você lê isso, alguém pode estar esperando uma resposta da sua empresa.</p><div><span>RESPOSTA</span><i>→</i><span>RELACIONAMENTO</span><i>→</i><strong>RECEITA</strong></div></section>
+      <section className="context-strip" id="como-funciona"><p>Enquanto você lê isso, alguém pode estar esperando uma resposta da sua empresa.</p><div><span className="journey-response">RESPOSTA</span><i>→</i><span className="journey-relationship">RELACIONAMENTO</span><i>→</i><strong className="journey-revenue">RECEITA</strong></div></section>
       <OrbitSection />
       <section className="solutions-section" id="solucoes">
         <div className="section-heading reveal-block"><span className="section-kicker">O QUE EU AUTOMATIZO</span><h2>Menos operação manual.<br /><em>Mais espaço para vender.</em></h2></div>
