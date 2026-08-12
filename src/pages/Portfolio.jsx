@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from 'motion/react';
+import { motion, useInView, useMotionValueEvent, useReducedMotion, useScroll, useTransform } from 'motion/react';
 import './Portfolio.css';
 
 const WHATSAPP_URL = 'https://wa.me/5563999603333?text=Ol%C3%A1%2C%20Thiago!%20Quero%20um%20or%C3%A7amento%20para%20automatizar%20meu%20CRM.';
@@ -125,7 +125,21 @@ function DashboardSection() {
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [nightMode, setNightMode] = useState(false);
+  const journeyRef = useRef(null);
   const reduceMotion = useReducedMotion();
+  const { scrollYProgress: journeyProgress } = useScroll({ target: journeyRef, offset: ['start start', 'end end'] });
+  const sunsetOpacity = useTransform(journeyProgress, [0, 0.18, 0.58, 0.86, 1], [0, 0.18, 0.95, 0.52, 0]);
+  const nightOpacity = useTransform(journeyProgress, [0, 0.52, 0.76, 0.94, 1], [0, 0, 0.28, 0.92, 1]);
+  const starsOpacity = useTransform(journeyProgress, [0, 0.66, 0.84, 1], [0, 0, 0.7, 1]);
+  const sunTop = useTransform(journeyProgress, [0, 0.3, 0.62, 0.84, 1], ['76vh', '54vh', '27vh', '10vh', '-18vh']);
+  const sunLeft = useTransform(journeyProgress, [0, 0.5, 1], ['76vw', '60vw', '47vw']);
+  const sunScale = useTransform(journeyProgress, [0, 0.58, 1], [0.82, 1, 0.72]);
+  const sunOpacity = useTransform(journeyProgress, [0, 0.1, 0.78, 0.94, 1], [0.72, 1, 1, 0.3, 0]);
+
+  useMotionValueEvent(journeyProgress, 'change', (latest) => {
+    setNightMode(latest >= 0.72);
+  });
 
   useEffect(() => {
     const revealElements = document.querySelectorAll('.reveal-block');
@@ -140,12 +154,37 @@ export default function Portfolio() {
   }, [menuOpen]);
 
   return (
-    <main className="site-shell">
+    <main className={`site-shell ${nightMode ? 'night-mode' : ''}`}>
+      <div className="journey-sky" aria-hidden="true">
+        <div className="sky-layer sky-day" />
+        <motion.div className="sky-layer sky-sunset" style={{ opacity: sunsetOpacity }} />
+        <motion.div className="sky-layer sky-night" style={{ opacity: nightOpacity }} />
+        <motion.div className="sky-stars" style={{ opacity: starsOpacity }}>
+          {Array.from({ length: 46 }, (_, index) => (
+            <i
+              key={index}
+              style={{
+                left: `${(index * 37 + 7) % 100}%`,
+                top: `${(index * 53 + 11) % 92}%`,
+                animationDelay: `${(index % 9) * 0.24}s`,
+                animationDuration: `${2.2 + (index % 5) * 0.55}s`,
+              }}
+            />
+          ))}
+        </motion.div>
+        <motion.div className="journey-sun" style={{ top: sunTop, left: sunLeft, scale: sunScale, opacity: sunOpacity }}>
+          <i className="sun-orbit sun-orbit-one" />
+          <i className="sun-orbit sun-orbit-two" />
+          <span />
+        </motion.div>
+        <div className="sky-grain" />
+      </div>
       <header className="site-header">
         <a href="#inicio" className="brand" aria-label="Início"><strong>THIAGO ARAÚJO</strong><i /></a>
         <nav className={menuOpen ? 'open' : ''} aria-label="Navegação principal"><a href="#solucoes" onClick={() => setMenuOpen(false)}>Soluções</a><a href="#resultados" onClick={() => setMenuOpen(false)}>Indicadores</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="nav-cta">Falar no WhatsApp ↗</a></nav>
         <button className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu" aria-expanded={menuOpen}><i /><i /></button>
       </header>
+      <div className="journey-stage" ref={journeyRef}>
       <section className="hero" id="inicio">
         <div className="hero-video" aria-hidden="true">
           <video autoPlay={!reduceMotion} muted loop playsInline preload="metadata">
@@ -165,6 +204,7 @@ export default function Portfolio() {
       </section>
       <section className="context-strip" id="como-funciona"><p>Enquanto você lê isso, alguém pode estar esperando uma resposta da sua empresa.</p><div><span className="journey-response">RESPOSTA</span><i>→</i><span className="journey-relationship">RELACIONAMENTO</span><i>→</i><strong className="journey-revenue">RECEITA</strong></div></section>
       <OrbitSection />
+      </div>
       <section className="solutions-section" id="solucoes">
         <div className="section-heading reveal-block"><span className="section-kicker solutions-kicker">O QUE EU AUTOMATIZO</span><h2>Menos operação manual.<br /><em>Mais espaço para vender.</em></h2></div>
         <div className="solution-list">{solutions.map((solution,index)=><motion.article key={solution.title} initial={{opacity:0,y:32}} whileInView={{opacity:1,y:0}} viewport={{once:true,margin:'-10%'}} transition={{delay:index*.08}}><span className="solution-number">{solution.number}</span><div className="solution-icon"><i /><b>{index===0?'↗':index===1?'⌁':'◎'}</b></div><div><h3>{solution.title}</h3><p>{solution.text}</p><small>{solution.tag}</small></div></motion.article>)}</div>

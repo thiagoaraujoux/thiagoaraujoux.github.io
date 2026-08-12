@@ -129,3 +129,78 @@ footer p{font-size:.96rem}footer>div a{font-size:.92rem}footer>small{font-size:.
 .orbit-features span{font-size:13px}
 
 @media(min-width:700px){.availability{font-size:15px}.context-strip div{font-size:14px}.orbit-copy .section-kicker,.solutions-kicker{font-size:18px}.orbit-features div{font-size:1.28rem}.orbit-features span{font-size:14px}}
+
+/* Scroll journey: daylight, sunset and the orbital night. */
+html,body{background:#070611}
+.site-shell{isolation:isolate;background:transparent!important;transition:color .45s ease}
+.journey-stage{position:relative;z-index:1}
+.journey-sky{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden;background:#f7f5ee}
+.sky-layer{position:absolute;inset:-2%;will-change:opacity}
+.sky-day{background:radial-gradient(circle at 78% 76%,rgba(255,207,126,.66),transparent 24%),radial-gradient(circle at 22% 16%,rgba(255,255,255,.98),transparent 38%),linear-gradient(180deg,#eaf6ff 0%,#f8f6ef 54%,#ffdfbd 100%)}
+.sky-sunset{background:radial-gradient(circle at 68% 64%,rgba(255,193,100,.86),transparent 23%),linear-gradient(180deg,#9bb9db 0%,#d2a7b7 40%,#f38b63 72%,#8a4f71 100%)}
+.sky-night{background:radial-gradient(circle at 66% 28%,rgba(100,73,174,.35),transparent 26%),radial-gradient(circle at 16% 74%,rgba(38,85,143,.18),transparent 30%),linear-gradient(180deg,#18132e 0%,#0a0919 48%,#05050d 100%)}
+.sky-stars{position:absolute;inset:0;z-index:2;will-change:opacity}
+.sky-stars:before{content:'';position:absolute;width:34vw;height:34vw;right:-12vw;top:8vh;border-radius:50%;background:radial-gradient(circle,rgba(118,91,212,.12),transparent 68%);filter:blur(24px)}
+.sky-stars i{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;box-shadow:0 0 7px rgba(216,223,255,.9);animation:skyTwinkle 3s ease-in-out infinite}
+.sky-stars i:nth-child(3n){width:3px;height:3px;background:#d7c9ff}.sky-stars i:nth-child(5n){width:1px;height:1px;box-shadow:0 0 10px 2px rgba(160,205,255,.72)}
+@keyframes skyTwinkle{50%{opacity:.22;transform:scale(.62)}}
+.journey-sun{position:absolute;z-index:3;width:clamp(112px,14vw,190px);aspect-ratio:1;display:grid;place-items:center;translate:-50% -50%;will-change:top,left,transform,opacity;filter:drop-shadow(0 18px 38px rgba(157,70,39,.18))}
+.journey-sun:before{content:'';position:absolute;inset:-34%;border-radius:50%;background:radial-gradient(circle,rgba(255,239,178,.46),rgba(255,183,92,.13) 38%,transparent 69%);animation:sunBreath 4.8s ease-in-out infinite}
+.journey-sun>span{position:relative;width:62%;height:62%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fffbd8 0%,#ffd36f 34%,#ff934d 72%,#d85d4d 100%);box-shadow:0 0 42px rgba(255,193,95,.75),0 0 110px rgba(255,130,80,.36)}
+.sun-orbit{position:absolute;border:1px solid rgba(151,80,88,.24);border-radius:50%;transform:rotate(-22deg) scaleY(.36)}
+.sun-orbit-one{inset:-2%;animation:sunOrbit 14s linear infinite}.sun-orbit-two{inset:-28%;transform:rotate(31deg) scaleY(.42);animation:sunOrbitReverse 20s linear infinite}
+.sun-orbit:after{content:'';position:absolute;width:7px;height:7px;top:47%;right:-4px;border-radius:50%;background:#fff1bd;box-shadow:0 0 14px #ff9f64}
+@keyframes sunBreath{50%{transform:scale(1.08);opacity:.78}}@keyframes sunOrbit{to{rotate:360deg}}@keyframes sunOrbitReverse{to{rotate:-360deg}}
+.sky-grain{position:absolute;inset:0;z-index:4;opacity:.08;mix-blend-mode:soft-light;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E")}
+
+/* Daylight header and hero. */
+.site-header{color:#1b2432;border-bottom-color:rgba(31,42,57,.12);background:rgba(249,248,241,.72);box-shadow:0 10px 45px rgba(68,59,47,.05);transition:color .45s ease,background .45s ease,border-color .45s ease}
+.site-header .brand>i{background:#ef8150;box-shadow:0 0 14px rgba(239,129,80,.72)}
+.site-header nav a{color:#4c5360}.site-header nav .nav-cta{color:#fff;border-color:rgba(101,72,171,.18);background:linear-gradient(100deg,#6847b8,#9d5e9e)}
+.menu-toggle{border-color:rgba(31,42,57,.15);background:rgba(255,255,255,.54)}.menu-toggle i{background:#222b38}
+.site-header nav{background:#f6f3ea}
+.site-shell.night-mode .site-header{color:#f5f2fb;border-bottom-color:rgba(255,255,255,.09);background:rgba(8,7,17,.75)}
+.site-shell.night-mode .site-header .brand>i{background:#ab7cff;box-shadow:0 0 14px #9a67ff}
+.site-shell.night-mode .site-header nav{background:#090716}.site-shell.night-mode .site-header nav a{color:#c6bfce}.site-shell.night-mode .site-header nav .nav-cta{color:#fff}
+.site-shell.night-mode .menu-toggle{border-color:rgba(255,255,255,.12);background:rgba(14,11,24,.78)}.site-shell.night-mode .menu-toggle i{background:#fff}
+
+.hero{color:#182434;background:transparent!important}
+.hero:before{content:'';position:absolute;inset:0;z-index:0;background:linear-gradient(90deg,rgba(249,248,242,.66) 0%,rgba(249,248,242,.2) 54%,transparent 82%);pointer-events:none}
+.hero-video{opacity:.14;mix-blend-mode:multiply}.hero-video video{opacity:.55;filter:saturate(.55) contrast(.75)}
+.hero-video-overlay{background:linear-gradient(180deg,rgba(249,248,242,.35),rgba(249,248,242,.12) 58%,transparent),linear-gradient(90deg,rgba(249,248,242,.7),transparent 76%)}
+.hero .availability{color:#95503f}.hero .availability i{background:#2f9f72;box-shadow:0 0 12px rgba(47,159,114,.52)}
+.hero h1 em{color:#9d516a;background:linear-gradient(100deg,#c95d43 0%,#8b4d83 64%,#5e4da4 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-copy>p{color:#4d5867}.hero .button-primary{background:linear-gradient(105deg,#6044ad,#a55d8c 58%,#da744c);box-shadow:0 18px 45px rgba(111,70,134,.22)}
+.hero .button-link{color:#313a48}.hero .button-link span{color:#8a4d80}.hero .trust-line{color:#5e6774}.hero .trust-line strong{color:#202a38}
+.hero .avatar-stack i{color:#fff;border-color:#f3eee5}.hero .scroll-cue{color:#5b6170}.hero .scroll-cue i{background:linear-gradient(#8a4d80,transparent)}.hero .scroll-cue i:before{background:#c6674e}
+.chat-shell{color:#f4f1fb;border-color:rgba(255,255,255,.14);box-shadow:0 34px 90px rgba(67,42,51,.28),inset 0 1px rgba(255,255,255,.08)}
+.planet-halo{background:radial-gradient(circle at 45% 40%,rgba(255,164,95,.22),rgba(126,75,150,.12) 40%,transparent 69%)}
+
+/* The warm horizon gives way to the orbital night. */
+.context-strip{color:#282837;border-color:rgba(74,51,56,.14);background:linear-gradient(100deg,rgba(255,240,215,.68),rgba(238,177,161,.45),rgba(175,125,160,.28));backdrop-filter:blur(9px)}
+.context-strip i{color:rgba(62,54,65,.42)}.context-strip .journey-response{color:#166d59}.context-strip .journey-relationship{color:#346890}.context-strip .journey-revenue{color:#713e78}
+.orbit-section{--ink:#f6f3fc;--muted:#c4bdcb;--violet-light:#d6bcff;--line:rgba(255,255,255,.13);color:var(--ink);background:linear-gradient(180deg,rgba(38,25,61,.04),rgba(10,8,23,.64) 35%,rgba(6,5,15,.86) 100%)!important}
+.orbit-section:before{content:'';position:absolute;inset:0;z-index:-1;background:radial-gradient(circle at 68% 48%,rgba(116,77,185,.18),transparent 34%)}
+.orbit-copy .section-kicker{color:#efb0a5}.orbit-copy h2 em{color:#d6bcff}.orbit-copy p{color:#c4bdcb}
+.sun-core{background:radial-gradient(circle at 35% 30%,#fff6cf,#f0a05d 24%,#8d4b72 52%,#281733 72%,#0c0911);box-shadow:0 0 42px rgba(242,156,93,.55),0 0 120px rgba(124,72,172,.28)}
+.sun-core span{color:#fff;text-shadow:0 1px 8px rgba(20,8,16,.7)}
+
+.solutions-section,.dashboard-section,.process-section,.final-cta{--ink:#f4f1fb;--muted:#aaa4b7;--violet-light:#c9adff;--line:rgba(255,255,255,.11);color:var(--ink);background:rgba(6,5,14,.74)!important}
+.solutions-section{background:linear-gradient(180deg,rgba(6,5,14,.86),rgba(13,9,24,.7))!important}
+.dashboard-section{background:radial-gradient(circle at 50% 48%,rgba(93,56,139,.14),transparent 44%),rgba(7,5,15,.82)!important}
+.process-section{background:linear-gradient(180deg,rgba(7,5,15,.82),rgba(8,6,17,.91))!important}
+.final-cta{background:rgba(7,5,15,.9)!important}
+footer{color:#f4f1fb;background:rgba(5,4,11,.94)}
+
+@media(min-width:1050px){
+  .site-header nav{background:none}
+  .site-shell.night-mode .site-header nav{background:none}
+  .journey-sun{width:clamp(150px,13vw,210px)}
+}
+@media(max-width:699px){
+  .journey-sun{width:112px}
+  .hero:before{background:linear-gradient(180deg,rgba(249,248,242,.5),rgba(249,248,242,.08) 76%,transparent)}
+  .hero-video{opacity:.1}
+  .orbit-section{background:linear-gradient(180deg,rgba(31,21,51,.24),rgba(8,6,18,.76) 30%,rgba(6,5,15,.92) 100%)!important}
+}
+@media(prefers-reduced-motion:reduce){.journey-sun:before,.sun-orbit,.sky-stars i{animation:none!important}}
