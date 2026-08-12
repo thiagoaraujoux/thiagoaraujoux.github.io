@@ -228,9 +228,10 @@ html,body{background:#08060c}
 .solutions-section,.dashboard-section,.process-section{background:#08060d!important}
 .solutions-section{background:linear-gradient(180deg,#08060d,#0e0a18)!important}.dashboard-section{background:radial-gradient(circle at 50% 50%,rgba(92,58,148,.12),transparent 42%),#08060d!important}.process-section{background:#08060d!important}
 .final-cta{isolation:isolate;background:radial-gradient(circle at 50% 46%,rgba(110,76,197,.24),transparent 33%),#07050e!important}
-.final-particles{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:.9}.final-particles .purple-particles-container{pointer-events:none}.final-particles canvas{filter:contrast(1.08) brightness(.92)!important}
+.final-particles{position:absolute;inset:0;z-index:1;overflow:hidden;pointer-events:none;opacity:.86}.final-particles .purple-particles-container{pointer-events:none}.final-particles canvas{filter:contrast(1.05) brightness(1.35)!important;animation:starfieldDrift 18s ease-in-out infinite alternate;transform-origin:center}
+@keyframes starfieldDrift{from{transform:translate3d(-1.8%,-1.2%,0) scale(1.035)}to{transform:translate3d(1.8%,1.2%,0) scale(1.08)}}
 .cta-planet{z-index:2;opacity:.72}.final-cta-content{z-index:3!important}
 footer{background:#050409!important}
 
 @media(max-width:1049px){.site-header nav{background:#fafbfe!important}.site-header nav a{color:#222b39!important}.site-header nav .nav-cta{color:#fff!important}}
-@media(prefers-reduced-motion:reduce){.final-particles{display:none}}
+@media(prefers-reduced-motion:reduce){.final-particles{display:none}.final-particles canvas{animation:none}}
