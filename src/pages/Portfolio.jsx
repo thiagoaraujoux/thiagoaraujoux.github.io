@@ -128,6 +128,7 @@ function DashboardSection() {
 
 export default function Portfolio() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [headerOnDark, setHeaderOnDark] = useState(false);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
@@ -142,9 +143,24 @@ export default function Portfolio() {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const updateHeaderContrast = () => {
+      const darkSection = document.querySelector('.orbit-section');
+      if (!darkSection) return;
+      setHeaderOnDark(darkSection.getBoundingClientRect().top <= 86);
+    };
+    updateHeaderContrast();
+    window.addEventListener('scroll', updateHeaderContrast, { passive: true });
+    window.addEventListener('resize', updateHeaderContrast);
+    return () => {
+      window.removeEventListener('scroll', updateHeaderContrast);
+      window.removeEventListener('resize', updateHeaderContrast);
+    };
+  }, []);
+
   return (
     <main className="site-shell">
-      <header className="site-header">
+      <header className={`site-header ${headerOnDark ? 'on-dark' : ''}`}>
         <a href="#inicio" className="brand" aria-label="Início"><strong>THIAGO ARAÚJO</strong><i /></a>
         <nav className={menuOpen ? 'open' : ''} aria-label="Navegação principal"><a href="#solucoes" onClick={() => setMenuOpen(false)}>Soluções</a><a href="#resultados" onClick={() => setMenuOpen(false)}>Indicadores</a><a href="#processo" onClick={() => setMenuOpen(false)}>Como funciona</a><a href={WHATSAPP_URL} target="_blank" rel="noreferrer" className="nav-cta">Falar no WhatsApp ↗</a></nav>
         <button className={`menu-toggle ${menuOpen ? 'open' : ''}`} onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu" aria-expanded={menuOpen}><i /><i /></button>
