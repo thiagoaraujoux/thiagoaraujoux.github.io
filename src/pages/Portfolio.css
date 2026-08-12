@@ -221,6 +221,7 @@ html,body{background:#08060c}
 .hero .button-link{color:#3d4756!important}.hero .button-link span{color:#6d58b4!important}.hero .trust-line{color:#596474!important}.hero .trust-line strong{color:#202938!important}
 .hero .avatar-stack i{border-color:#f6f7fa!important}.planet-halo{background:radial-gradient(circle,rgba(109,88,180,.14),transparent 70%)!important}
 .context-strip{color:#26303e!important;border-color:rgba(116,66,73,.16)!important;background:radial-gradient(circle at 50% 38%,rgba(255,222,157,.86),transparent 23%),linear-gradient(180deg,#fff9f4 0%,#ffe0bd 37%,#f7ad7b 66%,#684865 86%,#151126 100%)!important;backdrop-filter:none!important}
+.context-strip,.orbit-section{border-top:0!important;border-bottom:0!important;box-shadow:none!important}
 .context-strip i{color:#9aa2ae!important}.context-strip .journey-response{color:#16856c!important}.context-strip .journey-relationship{color:#5277ad!important}.context-strip .journey-revenue{color:#7756ad!important}
 
 .orbit-section{color:#f5f2fb!important;background:radial-gradient(circle at 72% 44%,rgba(117,76,184,.18),transparent 28%),linear-gradient(180deg,#151126 0%,#090712 72%)!important}
