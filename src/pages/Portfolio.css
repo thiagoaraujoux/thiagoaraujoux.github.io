@@ -220,8 +220,8 @@ html,body{background:#08060c}
 .hero-copy>p{color:#596474!important}.hero .button-primary{background:linear-gradient(105deg,#5f4aae,#846bd0)!important;box-shadow:0 16px 38px rgba(87,67,163,.22)!important}
 .hero .button-link{color:#3d4756!important}.hero .button-link span{color:#6d58b4!important}.hero .trust-line{color:#596474!important}.hero .trust-line strong{color:#202938!important}
 .hero .avatar-stack i{border-color:#f6f7fa!important}.planet-halo{background:radial-gradient(circle,rgba(109,88,180,.14),transparent 70%)!important}
-.context-strip{min-height:clamp(390px,44vw,560px);display:flex;flex-direction:column;justify-content:center;isolation:isolate;overflow:hidden;color:#26303e!important;border-color:rgba(116,66,73,.16)!important;background:radial-gradient(ellipse at 50% 20%,rgba(255,249,237,.98) 0%,rgba(255,230,195,.9) 24%,transparent 54%),linear-gradient(180deg,#fffaf6 0%,#ffeed8 17%,#ffd9b4 32%,#ffc290 47%,#f09b74 62%,#c87582 77%,#77516f 90%,#151126 100%)!important;backdrop-filter:none!important}
-.context-strip:before{content:'';position:absolute;inset:34% -16% -18%;z-index:-1;background:radial-gradient(ellipse at 50% 20%,rgba(255,163,104,.44),transparent 56%);filter:blur(34px);pointer-events:none}
+.context-strip{min-height:clamp(440px,50vw,640px);display:flex;flex-direction:column;justify-content:center;isolation:isolate;overflow:hidden;color:#26303e!important;border-color:rgba(116,66,73,.16)!important;background:linear-gradient(180deg,#f4f6fa 0%,#f5f5f6 8%,#fbf1e6 20%,#ffe2bf 34%,#ffc58d 50%,#ee966b 65%,#bd6f80 79%,#6f4c70 91%,#151126 100%)!important;backdrop-filter:none!important}
+.context-strip:before{content:'';position:absolute;inset:18% -20% 18%;z-index:-1;background:radial-gradient(ellipse at 50% 50%,rgba(255,177,106,.42),transparent 63%);filter:blur(44px);pointer-events:none}
 .context-strip,.orbit-section{border-top:0!important;border-bottom:0!important;box-shadow:none!important}
 .context-strip i{color:#9aa2ae!important}.context-strip .journey-response{color:#16856c!important}.context-strip .journey-relationship{color:#5277ad!important}.context-strip .journey-revenue{color:#7756ad!important}
 
