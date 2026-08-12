@@ -236,6 +236,7 @@ html,body{background:#08060c}
 .solutions-section,.dashboard-section,.process-section{background:#08060d!important}
 .solutions-section{background:linear-gradient(180deg,#08060d,#0e0a18)!important}.dashboard-section{background:radial-gradient(circle at 50% 50%,rgba(92,58,148,.12),transparent 42%),#08060d!important}.process-section{background:#08060d!important}
 .final-cta{isolation:isolate;background:radial-gradient(circle at 50% 46%,rgba(110,76,197,.24),transparent 33%),#07050e!important}
+.final-cta-content>small{margin-top:20px!important;color:#bbb4c6!important;font:500 clamp(.82rem,1.8vw,1rem)/1.5 'Manrope',sans-serif!important;letter-spacing:.015em!important}
 .final-particles{position:absolute;top:0;bottom:0;width:31%;z-index:1;overflow:hidden;pointer-events:none;opacity:.9}.final-particles-left{left:0}.final-particles-right{right:0}.final-particles .purple-particles-container{pointer-events:none}.final-particles canvas{filter:contrast(1.05) brightness(1.35)!important;animation:starfieldDrift 18s ease-in-out infinite alternate;transform-origin:center}.final-particles-right canvas{animation-direction:alternate-reverse}
 @keyframes starfieldDrift{from{transform:translate3d(-3%,-1.2%,0) scale(1.05)}to{transform:translate3d(3%,1.2%,0) scale(1.11)}}
 .cta-planet{z-index:2;opacity:.72}.final-cta-content{z-index:3!important}
